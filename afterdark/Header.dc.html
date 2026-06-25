@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</helmet>
+<div style="display:flex; align-items:center; justify-content:space-between; padding:22px 56px; border-bottom:1px solid rgba(222,180,90,.22); background:#112416; font-family:'Space Grotesk',sans-serif;">
+  <a href="Home.dc.html" style="display:flex; align-items:center; gap:13px; text-decoration:none;">
+    <img src="../assets/brand/mark-gold.svg" alt="Basbaas" style="width:44px; height:auto; display:block;">
+    <span style="font-family:'Bebas Neue',sans-serif; font-size:34px; letter-spacing:0.04em; color:#F2EDDF;">BASBAAS</span>
+  </a>
+  <nav style="display:flex; align-items:center; gap:30px; font-size:14px; letter-spacing:0.04em; text-transform:uppercase;">
+    <a href="Home.dc.html" style="{{ sHome }}">Home</a>
+    <a href="Menu.dc.html" style="{{ sMenu }}">Menu</a>
+    <a href="About.dc.html" style="{{ sAbout }}">About</a>
+    <a href="Events.dc.html" style="{{ sEvents }}">Events</a>
+    <a href="Gallery.dc.html" style="{{ sGallery }}">Gallery</a>
+    <a href="Contact.dc.html" style="{{ sContact }}">Contact</a>
+  </nav>
+  <a href="Menu.dc.html" style="background:#DEB45A; color:#112416; padding:12px 26px; border-radius:6px; font-size:14px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; text-decoration:none; white-space:nowrap;">Order now</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:92},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;menu&quot;,&quot;about&quot;,&quot;events&quot;,&quot;gallery&quot;,&quot;contact&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const active = this.props.active || '';
+    const link = (k) => ({
+      textDecoration: 'none', paddingBottom: '4px',
+      color: active === k ? '#DEB45A' : '#d8d2c2',
+      fontWeight: active === k ? 700 : 500,
+      borderBottom: active === k ? '2px solid #DEB45A' : '2px solid transparent'
+    });
+    return {
+      sHome: link('home'), sMenu: link('menu'), sAbout: link('about'),
+      sEvents: link('events'), sGallery: link('gallery'), sContact: link('contact')
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" href="../assets/brand/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style> * { box-sizing:border-box; } body { margin:0; }
+@media (max-width:900px){
+  div[style*="grid-template-columns"]{ grid-template-columns:1fr !important; }
+  div[style*="grid-template-columns"] > div[style*="background-image"]{ min-height:300px !important; }
+  div[style*="columns:3"]{ columns:2 !important; }
+}
+@media (max-width:760px){
+  div[style*="justify-content:space-between"]{ flex-wrap:wrap !important; }
+  nav[style*="display:flex"]{ flex-wrap:wrap !important; row-gap:8px !important; }
+  div[style*="columns:2"], div[style*="columns:3"]{ columns:1 !important; }
+  [style*="px 64px"],[style*="px 56px"],[style*="0 64px"]{ padding-left:22px !important; padding-right:22px !important; }
+  [style*="0 48px"]{ padding-left:16px !important; padding-right:16px !important; }
+  [style*="font-size:140px"]{ font-size:56px !important; }
+  [style*="font-size:132px"]{ font-size:54px !important; }
+  [style*="font-size:96px"]{ font-size:48px !important; }
+  [style*="font-size:92px"]{ font-size:46px !important; }
+  [style*="font-size:84px"]{ font-size:44px !important; }
+  [style*="font-size:74px"]{ font-size:40px !important; }
+  [style*="font-size:72px"]{ font-size:40px !important; }
+  [style*="font-size:66px"]{ font-size:38px !important; }
+  [style*="font-size:64px"]{ font-size:38px !important; }
+  [style*="font-size:62px"]{ font-size:36px !important; }
+  [style*="font-size:60px"]{ font-size:36px !important; }
+  [style*="font-size:58px"]{ font-size:34px !important; }
+  [style*="font-size:56px"]{ font-size:34px !important; }
+  [style*="font-size:54px"]{ font-size:32px !important; }
+  [style*="font-size:48px"]{ font-size:30px !important; }
+  [style*="font-size:46px"]{ font-size:30px !important; }
+  [style*="font-size:44px"]{ font-size:28px !important; }
+  [style*="font-size:42px"]{ font-size:27px !important; }
+  [style*="font-size:40px"]{ font-size:27px !important; }
+}
+</style>
+</helmet>
+<div style="background:#112416; color:#F2EDDF; font-family:'Space Grotesk',sans-serif;">
+
+  <dc-import name="Header" active="menu" hint-size="100%,92px"></dc-import>
+
+  <!-- page header -->
+  <div style="padding:80px 64px 56px; text-align:center;">
+    <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; color:#DEB45A; font-weight:600;">Discover our menu</div>
+    <div style="font-family:'Bebas Neue',sans-serif; font-size:96px; line-height:0.9; margin-top:12px; color:#F2EDDF;">THE MENU</div>
+    <div style="font-size:18px; color:#c8d0bd; margin-top:14px; max-width:600px; margin-left:auto; margin-right:auto; line-height:1.6;">Every dish built around our signature basbaas sauce, made fresh with exceptional ingredients.</div>
+  </div>
+
+  <!-- BREAKFAST -->
+  <div style="padding:24px 64px; max-width:1200px; margin:0 auto; width:100%;">
+    <div style="display:flex; align-items:center; gap:18px; margin-bottom:28px;">
+      <span style="font-family:'Bebas Neue',sans-serif; font-size:42px; letter-spacing:0.02em; color:#DEB45A; white-space:nowrap;">BREAKFAST / BRUNCH</span>
+      <span style="flex:1; height:1px; background:rgba(222,180,90,.25);"></span>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:24px;">
+      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <div style="width:130px; flex:none; background-image:url('../assets/img/beef-suqaar.jpg'); background-size:cover; background-position:center;"></div>
+        <div style="padding:20px 20px 20px 0; flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">BASBAAS BEEF (SUQAAR)</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£8.00</span></div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Tender beef cubes pan-fried with onions, peppers &amp; spices, with rice, pasta or sabaayad.</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <div style="width:130px; flex:none; background-image:url('../assets/img/liver.jpg'); background-size:cover; background-position:center;"></div>
+        <div style="padding:20px 20px 20px 0; flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">BASBAAS LIVER</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£7.00</span></div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Spiced with fresh onions &amp; pepperony, served with canjeero or chapati and Somali tea.</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <div style="width:130px; flex:none; background-image:url('../assets/img/kidneys.jpg'); background-size:cover; background-position:center;"></div>
+        <div style="padding:20px 20px 20px 0; flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">KELYO / KIDNEYS</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£7.00</span></div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Spiced with fresh onions &amp; pepperony, served with canjeero or chapati and Somali tea.</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <div style="width:130px; flex:none; background-image:url('../assets/img/omelet.jpg'); background-size:cover; background-position:center;"></div>
+        <div style="padding:20px 20px 20px 0; flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">EGG OMELET</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£6.00</span></div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">A fluffy, freshly prepared egg omelet served with anjeero or chapati and Somali tea.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEAT -->
+  <div style="padding:40px 64px 24px; max-width:1200px; margin:0 auto; width:100%;">
+    <div style="display:flex; align-items:center; gap:18px; margin-bottom:28px;">
+      <span style="font-family:'Bebas Neue',sans-serif; font-size:42px; letter-spacing:0.02em; color:#DEB45A; white-space:nowrap;">MEAT DISHES</span>
+      <span style="flex:1; height:1px; background:rgba(222,180,90,.25);"></span>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:24px;">
+      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <div style="width:130px; flex:none; background-image:url('../assets/img/lamb-shank.jpg'); background-size:cover; background-position:center;"></div>
+        <div style="padding:20px 20px 20px 0; flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">LAMB SHANK (HANIID)</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£13.95</span></div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Slow-cooked succulent lamb shank with fresh salad, chilli sauce and bariis or pasta.</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <div style="width:130px; flex:none; background-image:url('../assets/img/lamb-shank.jpg'); background-size:cover; background-position:center;"></div>
+        <div style="padding:20px 20px 20px 0; flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">LAMB SHOULDER (HILIB)</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£13.95</span></div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Slow-cooked succulent lamb shoulder with fresh salad, chilli sauce and bariis or pasta.</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <div style="width:130px; flex:none; background-image:url('../assets/img/chicken-suqaar.jpg'); background-size:cover; background-position:center;"></div>
+        <div style="padding:20px 20px 20px 0; flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">BASBAAS BEEF (SUQAAR)</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£9.00</span></div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Tender beef cubes pan-fried with onions, peppers &amp; spices, with rice, pasta or sabaayad.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHICKEN -->
+  <div style="padding:40px 64px 24px; max-width:1200px; margin:0 auto; width:100%;">
+    <div style="display:flex; align-items:center; gap:18px; margin-bottom:28px;">
+      <span style="font-family:'Bebas Neue',sans-serif; font-size:42px; letter-spacing:0.02em; color:#DEB45A; white-space:nowrap;">CHICKEN DISHES</span>
+      <span style="flex:1; height:1px; background:rgba(222,180,90,.25);"></span>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:24px;">
+      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <div style="width:130px; flex:none; background-image:url('../assets/img/chicken-pasta.jpg'); background-size:cover; background-position:center;"></div>
+        <div style="padding:20px 20px 20px 0; flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">QUARTER CHICKEN</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£9.00</span></div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Marinated in our special spices, with fresh salad, chilli sauce and bariis or pasta.</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <div style="width:130px; flex:none; background-image:url('../assets/img/chicken-suqaar.jpg'); background-size:cover; background-position:center;"></div>
+        <div style="padding:20px 20px 20px 0; flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">CHICKEN SUQAAR</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£9.00</span></div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Tender chicken cubes pan-fried with onions, peppers &amp; spices, with rice, pasta or sabaayad.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEAFOOD -->
+  <div style="padding:40px 64px 24px; max-width:1200px; margin:0 auto; width:100%;">
+    <div style="display:flex; align-items:center; gap:18px; margin-bottom:28px;">
+      <span style="font-family:'Bebas Neue',sans-serif; font-size:42px; letter-spacing:0.02em; color:#DEB45A; white-space:nowrap;">SEAFOOD DISHES</span>
+      <span style="flex:1; height:1px; background:rgba(222,180,90,.25);"></span>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:24px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; padding:24px;">
+        <div><div style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">SALMON SPECIAL</div><div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Fresh salmon seasoned with special spices, grilled or pan-seared, with rice or pasta.</div></div>
+        <span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£11.00</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; padding:24px;">
+        <div><div style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">KINGFISH SPECIAL</div><div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Fresh kingfish seasoned with special spices, fried and served with rice, soor or pasta.</div></div>
+        <span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£11.00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESSERTS -->
+  <div style="padding:40px 64px 80px; max-width:1200px; margin:0 auto; width:100%;">
+    <div style="display:flex; align-items:center; gap:18px; margin-bottom:28px;">
+      <span style="font-family:'Bebas Neue',sans-serif; font-size:42px; letter-spacing:0.02em; color:#DEB45A; white-space:nowrap;">DESSERTS</span>
+      <span style="flex:1; height:1px; background:rgba(222,180,90,.25);"></span>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+      <div style="background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <div style="height:180px; background-image:url('../assets/img/date-cake.jpg'); background-size:cover; background-position:center;"></div>
+        <div style="padding:22px;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">DATE CAKE</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£4.00</span></div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Moist, freshly baked in-house date cake with ice cream and our signature special sauce.</div>
+        </div>
+      </div>
+      <div style="background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <div style="height:180px; background-image:url('../assets/img/date-cake.jpg'); background-size:cover; background-position:center;"></div>
+        <div style="padding:22px;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">MILK CAKE</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£4.00</span></div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Soft, freshly made milk cake, delicately sweet and served chilled. Loved by the whole family.</div>
+        </div>
+      </div>
+      <div style="background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <div style="height:180px; background-image:url('../assets/img/sabaayad.jpg'); background-size:cover; background-position:center;"></div>
+        <div style="padding:22px;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">MASOUB</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£7.00</span></div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Mashed banana, chapati, fresh cream and honey, topped with black seeds — a sweet finish.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div style="background:#DEB45A; padding:72px 64px; text-align:center;">
+    <div style="font-family:'Bebas Neue',sans-serif; font-size:64px; color:#112416;">READY TO ORDER?</div>
+    <div style="font-size:17px; color:#3a4a2f; margin-top:8px;">Dine in, takeaway, or book your table at Basbaas.</div>
+    <div style="display:flex; gap:14px; justify-content:center; margin-top:26px;">
+      <a href="Contact.dc.html" style="background:#112416; color:#F2EDDF; padding:16px 32px; border-radius:6px; font-size:15px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; text-decoration:none;">Book a table</a>
+      <a href="Contact.dc.html" style="background:#fff; color:#112416; padding:16px 32px; border-radius:6px; font-size:15px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; text-decoration:none;">Contact us</a>
+    </div>
+  </div>
+
+  <dc-import name="Footer" hint-size="100%,340px"></dc-import>
+</div>
+</x-dc>
+</body>
+</html>

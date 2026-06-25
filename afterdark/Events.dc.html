@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" href="../assets/brand/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style> * { box-sizing:border-box; } body { margin:0; }
+@media (max-width:900px){
+  div[style*="grid-template-columns"]{ grid-template-columns:1fr !important; }
+  div[style*="grid-template-columns"] > div[style*="background-image"]{ min-height:300px !important; }
+  div[style*="columns:3"]{ columns:2 !important; }
+}
+@media (max-width:760px){
+  div[style*="justify-content:space-between"]{ flex-wrap:wrap !important; }
+  nav[style*="display:flex"]{ flex-wrap:wrap !important; row-gap:8px !important; }
+  div[style*="columns:2"], div[style*="columns:3"]{ columns:1 !important; }
+  [style*="px 64px"],[style*="px 56px"],[style*="0 64px"]{ padding-left:22px !important; padding-right:22px !important; }
+  [style*="0 48px"]{ padding-left:16px !important; padding-right:16px !important; }
+  [style*="font-size:140px"]{ font-size:56px !important; }
+  [style*="font-size:132px"]{ font-size:54px !important; }
+  [style*="font-size:96px"]{ font-size:48px !important; }
+  [style*="font-size:92px"]{ font-size:46px !important; }
+  [style*="font-size:84px"]{ font-size:44px !important; }
+  [style*="font-size:74px"]{ font-size:40px !important; }
+  [style*="font-size:72px"]{ font-size:40px !important; }
+  [style*="font-size:66px"]{ font-size:38px !important; }
+  [style*="font-size:64px"]{ font-size:38px !important; }
+  [style*="font-size:62px"]{ font-size:36px !important; }
+  [style*="font-size:60px"]{ font-size:36px !important; }
+  [style*="font-size:58px"]{ font-size:34px !important; }
+  [style*="font-size:56px"]{ font-size:34px !important; }
+  [style*="font-size:54px"]{ font-size:32px !important; }
+  [style*="font-size:48px"]{ font-size:30px !important; }
+  [style*="font-size:46px"]{ font-size:30px !important; }
+  [style*="font-size:44px"]{ font-size:28px !important; }
+  [style*="font-size:42px"]{ font-size:27px !important; }
+  [style*="font-size:40px"]{ font-size:27px !important; }
+}
+</style>
+</helmet>
+<div style="background:#112416; color:#F2EDDF; font-family:'Space Grotesk',sans-serif;">
+
+  <dc-import name="Header" active="events" hint-size="100%,92px"></dc-import>
+
+  <!-- hero -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; min-height:580px;">
+    <div style="padding:88px 64px; display:flex; flex-direction:column; justify-content:center;">
+      <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; color:#DEB45A; font-weight:600;">Private events &amp; hall hire</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:84px; line-height:0.88; margin-top:14px; color:#F2EDDF;">HOST YOUR <span style="color:#DEB45A;">CELEBRATION</span> WITH US.</div>
+      <div style="font-size:18px; line-height:1.65; color:#c8d0bd; margin-top:22px; max-width:460px;">From supper clubs to family gatherings, Basbaas creates memorable evenings with authentic Somali feasts, warm hospitality and beautiful decor.</div>
+      <a href="#enquire" style="margin-top:32px; background:#DEB45A; color:#112416; padding:16px 34px; border-radius:6px; font-size:15px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; align-self:flex-start; text-decoration:none;">Enquire now</a>
+    </div>
+    <div style="background-image:url('../assets/img/chicken-pasta.jpg'); background-size:cover; background-position:center;"></div>
+  </div>
+
+  <!-- offerings -->
+  <div style="padding:84px 64px; background:#0d1b11;">
+    <div style="text-align:center; margin-bottom:48px;">
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:58px; color:#F2EDDF;">WHAT WE OFFER</div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; max-width:1100px; margin:0 auto;">
+      <div style="background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; padding:34px;">
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:#DEB45A;">SUPPER CLUBS</div>
+        <div style="font-size:15px; color:#9fa893; line-height:1.6; margin-top:12px;">Themed evenings celebrating Somali culture, food and community — exactly as our guests have loved.</div>
+      </div>
+      <div style="background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; padding:34px;">
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:#DEB45A;">PRIVATE DINING</div>
+        <div style="font-size:15px; color:#9fa893; line-height:1.6; margin-top:12px;">Reserve the space for birthdays, family occasions and celebrations, with bespoke platters and menus.</div>
+      </div>
+      <div style="background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; padding:34px;">
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:#DEB45A;">CATERING &amp; PLATTERS</div>
+        <div style="font-size:15px; color:#9fa893; line-height:1.6; margin-top:12px;">Basbaas platters, salads, samosas and desserts catered for your event, large or small.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- quote -->
+  <div style="padding:80px 64px; text-align:center; max-width:920px; margin:0 auto;">
+    <div style="color:#DEB45A; font-size:18px; letter-spacing:3px;">★★★★★</div>
+    <div style="font-size:28px; line-height:1.45; color:#e7e0d2; margin-top:18px;">"We can't thank Basbaas enough for the amazing decor and ambience they created for our supper club celebrating Somalia. Everyone raved about the food and the service!"</div>
+    <div style="font-family:'Bebas Neue',sans-serif; font-size:24px; color:#DEB45A; margin-top:20px;">RAGHAD · EVENT HOST</div>
+  </div>
+
+  <!-- enquiry form -->
+  <div id="enquire" style="background:#DEB45A; color:#112416; padding:84px 64px;">
+    <div style="max-width:760px; margin:0 auto;">
+      <div style="text-align:center; margin-bottom:36px;">
+        <div style="font-size:13px; letter-spacing:0.18em; text-transform:uppercase; font-weight:700; color:#3a4a2f;">Make an enquiry</div>
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:56px; margin-top:6px; color:#112416;">TELL US ABOUT YOUR EVENT</div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+        <input placeholder="Your name" style="padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF;">
+        <input placeholder="Phone number" style="padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF;">
+        <input placeholder="Email address" style="padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF;">
+        <input placeholder="Date &amp; number of guests" style="padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF;">
+        <textarea placeholder="Tell us about your event…" rows="4" style="grid-column:1 / -1; padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF; resize:vertical;"></textarea>
+      </div>
+      <button style="margin-top:22px; width:100%; background:#112416; color:#F2EDDF; padding:17px; border-radius:8px; border:none; font-size:15px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; font-family:inherit; cursor:pointer;">Send enquiry</button>
+    </div>
+  </div>
+
+  <dc-import name="Footer" hint-size="100%,340px"></dc-import>
+</div>
+</x-dc>
+</body>
+</html>

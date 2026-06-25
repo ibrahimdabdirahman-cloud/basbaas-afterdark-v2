@@ -1,0 +1,21 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/home", "destination": "/afterdark/Home.dc.html" },
+    { "source": "/menu", "destination": "/afterdark/Menu.dc.html" },
+    { "source": "/about", "destination": "/afterdark/About.dc.html" },
+    { "source": "/events", "destination": "/afterdark/Events.dc.html" },
+    { "source": "/gallery", "destination": "/afterdark/Gallery.dc.html" },
+    { "source": "/contact", "destination": "/afterdark/Contact.dc.html" }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ]
+}
