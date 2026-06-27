@@ -106,13 +106,38 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
 
       <div style="font-family:'Bebas Neue',sans-serif; font-size:38px; color:#DEB45A; margin-bottom:16px;">BOOK A TABLE</div>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-        <input placeholder="Your name" style="padding:15px 18px; border-radius:8px; border:1px solid rgba(222,180,90,.2); font-size:15px; font-family:inherit; background:#16301d; color:#F2EDDF;">
-        <input placeholder="Phone number" style="padding:15px 18px; border-radius:8px; border:1px solid rgba(222,180,90,.2); font-size:15px; font-family:inherit; background:#16301d; color:#F2EDDF;">
-        <input placeholder="Date" style="padding:15px 18px; border-radius:8px; border:1px solid rgba(222,180,90,.2); font-size:15px; font-family:inherit; background:#16301d; color:#F2EDDF;">
-        <input placeholder="Number of guests" style="padding:15px 18px; border-radius:8px; border:1px solid rgba(222,180,90,.2); font-size:15px; font-family:inherit; background:#16301d; color:#F2EDDF;">
-        <textarea placeholder="Any special requests?" rows="3" style="grid-column:1 / -1; padding:15px 18px; border-radius:8px; border:1px solid rgba(222,180,90,.2); font-size:15px; font-family:inherit; background:#16301d; color:#F2EDDF; resize:vertical;"></textarea>
+        <input id="adName" placeholder="Your name" style="padding:15px 18px; border-radius:8px; border:1px solid rgba(222,180,90,.2); font-size:15px; font-family:inherit; background:#16301d; color:#F2EDDF;">
+        <input id="adPhone" type="tel" inputmode="tel" placeholder="Phone number" style="padding:15px 18px; border-radius:8px; border:1px solid rgba(222,180,90,.2); font-size:15px; font-family:inherit; background:#16301d; color:#F2EDDF;">
+        <input id="adDate" type="date" placeholder="Date" style="padding:15px 18px; border-radius:8px; border:1px solid rgba(222,180,90,.2); font-size:15px; font-family:inherit; background:#16301d; color:#F2EDDF;">
+        <input id="adTime" type="time" placeholder="Time" style="padding:15px 18px; border-radius:8px; border:1px solid rgba(222,180,90,.2); font-size:15px; font-family:inherit; background:#16301d; color:#F2EDDF;">
+        <input id="adGuests" type="number" min="1" placeholder="Number of guests" style="grid-column:1 / -1; padding:15px 18px; border-radius:8px; border:1px solid rgba(222,180,90,.2); font-size:15px; font-family:inherit; background:#16301d; color:#F2EDDF;">
+        <textarea id="adNotes" placeholder="Any special requests?" rows="3" style="grid-column:1 / -1; padding:15px 18px; border-radius:8px; border:1px solid rgba(222,180,90,.2); font-size:15px; font-family:inherit; background:#16301d; color:#F2EDDF; resize:vertical;"></textarea>
       </div>
-      <button style="margin-top:18px; width:100%; background:#DEB45A; color:#112416; padding:17px; border-radius:8px; border:none; font-size:15px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; font-family:inherit; cursor:pointer;">Request booking</button>
+      <button id="adBookBtn" type="button" style="margin-top:18px; width:100%; background:#DEB45A; color:#112416; padding:17px; border-radius:8px; border:none; font-size:15px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; font-family:inherit; cursor:pointer;">Request booking</button>
+      <div id="adStatus" role="status" style="margin-top:12px; font-size:14px; min-height:18px; color:#DEB45A;"></div>
+      <script>
+      (function(){
+        // Delegated on document so it survives the dc-bundler rebuilding the DOM.
+        document.addEventListener('click', function(e){
+          if(!e.target.closest('#adBookBtn')) return;
+          e.preventDefault();
+          var g=function(id){var el=document.getElementById(id);return el?String(el.value||'').trim():'';};
+          var s=document.getElementById('adStatus');
+          var data={name:g('adName'),phone:g('adPhone'),date:g('adDate'),time:g('adTime'),party:g('adGuests'),notes:g('adNotes')};
+          if(!data.name||!data.phone||!data.date||!data.time){ if(s){s.style.color='#e9a';s.textContent='Please add your name, phone, date and time.';} return; }
+          if(s){s.style.color='#DEB45A';s.textContent='Sending…';}
+          if(window.MasulForms&&window.MasulForms.submit){
+            window.MasulForms.submit('booking',data).then(function(r){
+              if(r&&r.ok){ if(s){s.style.color='#9fd29f';s.textContent=r.message||"Table requested — we'll confirm by text shortly.";} }
+              else { if(s){s.style.color='#e9a';s.textContent=(r&&r.errors?r.errors.join(' '):'Something went wrong — please call 0203 1962 607.');} }
+            });
+          } else {
+            window.location.href='mailto:basbaas28@gmail.com?subject='+encodeURIComponent('Booking request from '+data.name)+'&body='+encodeURIComponent('Name: '+data.name+'\nPhone: '+data.phone+'\nDate: '+data.date+' '+data.time+'\nGuests: '+data.party+'\nNotes: '+data.notes);
+            if(s){s.textContent='Opening your email app…';}
+          }
+        });
+      })();
+      </script>
     </div>
 
     <!-- map + social -->
