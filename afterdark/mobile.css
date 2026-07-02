@@ -21,6 +21,10 @@ body {
     margin-top: 14px !important;
   }
 
+  [style*="background: rgb(222, 180, 90); color: rgb(17, 36, 22); padding: 16px 0px"] {
+    margin-top: 90px !important;
+  }
+
   [style*="grid-template-columns"] {
     grid-template-columns: minmax(0, 1fr) !important;
   }
