@@ -1,0 +1,127 @@
+html,
+body {
+  overflow-x: clip;
+}
+
+@media (max-width: 760px) {
+  body {
+    min-width: 0;
+  }
+
+  .sc-host[data-sc-name="Header"] {
+    position: sticky;
+    top: 0;
+  }
+
+  nav + * {
+    scroll-margin-top: 116px;
+  }
+
+  [style*="grid-template-columns"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  [style*="columns:3"],
+  [style*="columns:2"] {
+    columns: 1 !important;
+  }
+
+  [style*="padding"][style*="64px"],
+  [style*="padding"][style*="60px"],
+  [style*="padding"][style*="56px"],
+  [style*="padding"][style*="48px"] {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  [style*="min-width"] {
+    min-width: 0 !important;
+  }
+
+  h1,
+  [style*="font-size:140px"],
+  [style*="font-size:132px"],
+  [style*="font-size:96px"],
+  [style*="font-size:92px"],
+  [style*="font-size:84px"] {
+    font-size: clamp(44px, 16vw, 64px) !important;
+    line-height: 0.92 !important;
+  }
+
+  h2,
+  [style*="font-size:74px"],
+  [style*="font-size:72px"],
+  [style*="font-size:66px"],
+  [style*="font-size:64px"],
+  [style*="font-size:62px"],
+  [style*="font-size:60px"],
+  [style*="font-size:58px"],
+  [style*="font-size:56px"],
+  [style*="font-size:54px"] {
+    font-size: clamp(32px, 11vw, 46px) !important;
+    line-height: 0.98 !important;
+  }
+
+  [style*="height:680px"] {
+    height: auto !important;
+    min-height: 74svh !important;
+    padding-top: 70px !important;
+    padding-bottom: 54px !important;
+    background-position: 62% center !important;
+  }
+
+  [style*="height:440px"] {
+    height: 330px !important;
+  }
+
+  [style*="min-height:420px"],
+  [style*="min-height:380px"] {
+    min-height: 300px !important;
+  }
+
+  [style*="width:130px"][style*="background-image"] {
+    width: 100% !important;
+    height: 180px !important;
+    flex: none !important;
+  }
+
+  [style*="display:flex"][style*="background:#152c1a"],
+  [style*="display:flex"][style*="background:#0d1b11"],
+  [style*="display:flex"][style*="border:1px"] {
+    flex-direction: column !important;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    max-width: 100%;
+    font-size: 16px !important;
+  }
+
+  a[style*="padding:16px 34px"],
+  a[style*="padding:16px 30px"],
+  a[style*="padding:15px 36px"] {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  img,
+  svg,
+  video,
+  iframe {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  [style*="letter-spacing:0.2em"],
+  [style*="letter-spacing:0.18em"] {
+    letter-spacing: 0.1em !important;
+  }
+
+  [style*="display:flex"][style*="gap:14px"] {
+    row-gap: 10px !important;
+  }
+}
