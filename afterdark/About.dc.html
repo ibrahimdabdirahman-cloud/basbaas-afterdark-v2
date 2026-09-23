@@ -4,30 +4,55 @@
 <!-- masul:start -->
 <script>
 window.MASUL_SITE_ID="basbaas-afterdark";
+window.MASUL_NAME="BasBaas Cuisine";
 window.MASUL_ACCENT="#DEB45A";
-window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat":"Light Bites","name":"Basbaas Egg Omelet","price":6},{"cat":"Light Bites","name":"Masoub","price":7},{"cat":"Mains","name":"Marinated Quarter Chicken","price":9},{"cat":"Mains","name":"Chicken Suqaar","price":9},{"cat":"Mains","name":"Salmon Special","price":11},{"cat":"Mains","name":"Kingfish Special","price":11},{"cat":"Desserts","name":"Date Cake","price":4},{"cat":"Desserts","name":"Milk Cake","price":4}];
+// Same model as cafe-royal.uk: collection orders, table booking and reviews, each opened
+// as its own form (the floating button is reviews). Delivery runs through the Deliveroo /
+// Uber Eats / Just Eat links, so the order form is collection only.
+window.MASUL_FEATURES=["order","booking","review"];
+window.MASUL_SEPARATE_FORMS=true;
+window.MASUL_LAUNCHER="review";
+window.MASUL_COLLECTION_ONLY=true;
+window.MASUL_MENU=[{"cat":"Breakfast / Brunch","name":"Beef Suqaar (breakfast)","price":8},{"cat":"Breakfast / Brunch","name":"Basbaas Liver","price":7},{"cat":"Breakfast / Brunch","name":"Kelyo (Kidneys)","price":7},{"cat":"Breakfast / Brunch","name":"Egg Omelet","price":6},{"cat":"Meat","name":"Lamb Shank (Haniid)","price":13.95},{"cat":"Meat","name":"Lamb Shoulder (Hilib)","price":13.95},{"cat":"Meat","name":"Beef Suqaar","price":9},{"cat":"Chicken","name":"Quarter Chicken","price":9},{"cat":"Chicken","name":"Chicken Suqaar","price":9},{"cat":"Seafood","name":"Salmon Special","price":11},{"cat":"Seafood","name":"Kingfish Special","price":11},{"cat":"Desserts","name":"Date Cake","price":4},{"cat":"Desserts","name":"Milk Cake","price":4},{"cat":"Desserts","name":"Masoub","price":7}];
 </script>
-<script src="masul-widget.js"></script>
+<script src="masul-widget.js?v=2"></script>
+<script>
+/* "Add to order" buttons on dish cards: open the collection order form with that dish
+   already in the basket. Delegated on document so it survives the bundler rebuilding the DOM. */
+document.addEventListener("click", function(e){
+  var b=e.target.closest&&e.target.closest("[data-order-item]");
+  if(!b)return;
+  e.preventDefault();
+  if(!(window.MasulForms&&window.MasulForms.open)){location.href="Menu.dc.html";return;}
+  window.MasulForms.open("order",{items:[{name:b.getAttribute("data-order-item"),qty:1}]});
+  setTimeout(function(){ // bring the chosen dish into view inside the form
+    var row=[].filter.call(document.querySelectorAll(".mzf-item"),function(r){var q=r.querySelector(".mzf-q");return q&&q.textContent!=="0";})[0];
+    if(row){row.scrollIntoView({block:"center"});row.style.background="rgba(222,180,90,.18)";}
+  },60);
+});
+</script>
 <!-- masul:end -->
-<title>BasBaas Cuisine · After Dark · SE18 London</title>
+<title>About Us · BasBaas Cuisine, Woolwich SE18</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/afterdark/mobile.css">
 <script src="./support.js"></script>
 <!-- seo:auto start -->
-<meta name="description" content="BasBaas Cuisine — authentic Somali food in SE18 London. Bold flavours from the Horn of Africa built around our signature Basbaas sauce.">
+<meta name="description" content="Somali dining in SE18: bold Horn of Africa flavours built around our house-made basbaas sauce, cooked fresh and served with warm hospitality.">
 <link rel="canonical" href="https://basbaas-afterdark-v2.vercel.app/afterdark/About.dc.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BasBaas Cuisine">
-<meta property="og:title" content="BasBaas Cuisine · After Dark · SE18 London">
-<meta property="og:description" content="BasBaas Cuisine — authentic Somali food in SE18 London. Bold flavours from the Horn of Africa built around our signature Basbaas sauce.">
+<meta property="og:title" content="About Us · BasBaas Cuisine, Woolwich SE18">
+<meta property="og:description" content="Somali dining in SE18: bold Horn of Africa flavours built around our house-made basbaas sauce, cooked fresh and served with warm hospitality.">
 <meta property="og:url" content="https://basbaas-afterdark-v2.vercel.app/afterdark/About.dc.html">
 <meta property="og:locale" content="en_GB">
-<meta property="og:image" content="https://basbaas-afterdark-v2.vercel.app/assets/img/chicken-suqaar.jpg">
+<meta property="og:image" content="https://basbaas-afterdark-v2.vercel.app/og-thumb.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BasBaas Cuisine · After Dark · SE18 London">
-<meta name="twitter:description" content="BasBaas Cuisine — authentic Somali food in SE18 London. Bold flavours from the Horn of Africa built around our signature Basbaas sauce.">
-<meta name="twitter:image" content="https://basbaas-afterdark-v2.vercel.app/assets/img/chicken-suqaar.jpg">
+<meta name="twitter:title" content="About Us · BasBaas Cuisine, Woolwich SE18">
+<meta name="twitter:description" content="Somali dining in SE18: bold Horn of Africa flavours built around our house-made basbaas sauce, cooked fresh and served with warm hospitality.">
+<meta name="twitter:image" content="https://basbaas-afterdark-v2.vercel.app/og-thumb.jpg">
 <!-- seo:auto end -->
 <style id="sc-sticky-header-fix">.sc-host[data-sc-name="Header"]{position:sticky;top:0;z-index:1000}</style>
 </head>
@@ -42,7 +67,7 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
 <style> * { box-sizing:border-box; } body { margin:0; }
 @media (max-width:900px){
   div[style*="grid-template-columns"]{ grid-template-columns:1fr !important; }
-  div[style*="grid-template-columns"] > div[style*="background-image"]{ min-height:300px !important; }
+  
   div[style*="columns:3"]{ columns:2 !important; }
 }
 @media (max-width:760px){
@@ -80,24 +105,24 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
   <!-- hero -->
   <div style="position:relative; height:440px; background-image:linear-gradient(rgba(13,27,17,.62),rgba(13,27,17,.62)), url('../assets/img/lamb-shank.jpg'); background-size:cover; background-position:center; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
     <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; color:#DEB45A; font-weight:600;">Our story</div>
-    <div style="font-family:'Bebas Neue',sans-serif; font-size:92px; line-height:0.9; margin-top:10px; color:#F2EDDF;">WELCOME — SOO DHAWOOW</div>
+    <h1 style="margin:0; font-family:'Bebas Neue',sans-serif; font-size:92px; line-height:0.9; margin-top:10px; color:#F2EDDF;">WELCOME — SOO DHAWOOW</h1>
   </div>
 
   <!-- intro -->
   <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px; padding:88px 64px; max-width:1200px; margin:0 auto; align-items:center;">
     <div>
       <div style="font-family:'Bebas Neue',sans-serif; font-size:30px; letter-spacing:0.04em; color:#DEB45A;">MODERN · AUTHENTIC · UNFORGETTABLE</div>
-      <div style="font-family:'Bebas Neue',sans-serif; font-size:54px; line-height:0.95; margin-top:14px; color:#F2EDDF;">THE TRUE TASTE OF SOMALI FOOD, IN SE18.</div>
+      <h2 style="margin:0; font-family:'Bebas Neue',sans-serif; font-size:54px; line-height:0.95; margin-top:14px; color:#F2EDDF;">THE TRUE TASTE OF SOMALI FOOD, IN SE18.</h2>
       <div style="font-size:17px; line-height:1.7; color:#c8d0bd; margin-top:20px;">Basbaas is SE18 London's newest Somali dining destination, offering a modern setting and bold, authentic flavours inspired by the Horn of Africa. Built around our signature basbaas sauce, every dish is made with fresh ingredients and exceptional quality.</div>
       <div style="font-size:17px; line-height:1.7; color:#c8d0bd; margin-top:16px;">Whether you're new to Somali cuisine or a longtime fan, Basbaas is where tradition meets excellence. Dine in, savour the flavour, and come back for more.</div>
     </div>
-    <div style="background-image:url('../assets/img/canjeero.jpg'); background-size:cover; background-position:center; border-radius:14px; min-height:420px;"></div>
+    <img src="../assets/img/about-dining.jpg" alt="Lamb shank and rice served on the green velvet banquette in the BasBaas dining room" width="1200" height="900" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; border-radius:14px;">
   </div>
 
   <!-- values -->
   <div style="background:#0d1b11; padding:84px 64px;">
     <div style="text-align:center; margin-bottom:48px;">
-      <div style="font-family:'Bebas Neue',sans-serif; font-size:58px; color:#F2EDDF;">ROOTED IN TRADITION</div>
+      <h2 style="margin:0; font-family:'Bebas Neue',sans-serif; font-size:58px; color:#F2EDDF;">ROOTED IN TRADITION</h2>
     </div>
     <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; max-width:1100px; margin:0 auto;">
       <div style="background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; padding:34px;">
@@ -127,7 +152,7 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
 
   <!-- CTA -->
   <div style="background:#DEB45A; padding:72px 64px; text-align:center;">
-    <div style="font-family:'Bebas Neue',sans-serif; font-size:64px; color:#112416;">COME AND TASTE FOR YOURSELF.</div>
+    <h2 style="margin:0; font-family:'Bebas Neue',sans-serif; font-size:64px; color:#112416;">COME AND TASTE FOR YOURSELF.</h2>
     <div style="display:flex; gap:14px; justify-content:center; margin-top:26px;">
       <a href="Menu.dc.html" style="background:#112416; color:#F2EDDF; padding:16px 32px; border-radius:6px; font-size:15px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; text-decoration:none;">View the menu</a>
       <a data-masul-open="booking" href="Contact.dc.html" style="background:#fff; color:#112416; padding:16px 32px; border-radius:6px; font-size:15px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; text-decoration:none;">Book a table</a>

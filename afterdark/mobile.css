@@ -3,9 +3,34 @@ body {
   overflow-x: clip;
 }
 
+/* Home ticker: two identical halves slide left forever; still for reduced motion. */
+.ticker-track {
+  display: inline-flex;
+  animation: ad-ticker 90s linear infinite;
+}
+
+.ticker-track > span {
+  white-space: nowrap;
+}
+
+@keyframes ad-ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+}
+
 @media (max-width: 760px) {
   body {
     min-width: 0;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 
   .sc-host[data-sc-name="Header"] {
@@ -21,8 +46,19 @@ body {
     margin-top: 14px !important;
   }
 
-  [style*="background: rgb(222, 180, 90); color: rgb(17, 36, 22); padding: 16px 0px"] {
-    margin-top: 90px !important;
+  [style*="display:flex"][style*="gap:14px"],
+  [style*="display: flex"][style*="gap: 14px"] {
+    flex-wrap: wrap !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+  }
+
+  [style*="display:flex"][style*="gap:14px"] > a,
+  [style*="display: flex"][style*="gap: 14px"] > a {
+    flex: 1 1 160px !important;
+    min-width: 0 !important;
+    justify-content: center !important;
+    text-align: center !important;
   }
 
   [style*="grid-template-columns"] {
@@ -72,7 +108,9 @@ body {
 
   [style*="height: 680px"] {
     height: auto !important;
-    min-height: 74svh !important;
+    /* Fill the screen under the sticky header, so the ticker starts below the fold
+       and the floating review button never sits on it (replaces a 90px blank gap). */
+    min-height: calc(100svh - 108px) !important;
     padding-top: 70px !important;
     padding-bottom: 54px !important;
     background-position: 62% center !important;
@@ -107,6 +145,17 @@ body {
     font-size: 16px !important;
   }
 
+  button[data-order-item] {
+    font-size: 13px !important;
+  }
+
+  /* On a phone the photo sits behind the copy, so darken it evenly (the desktop
+     gradient only darkens the left half, which left the text on the white plate). */
+  .hero {
+    background-image: linear-gradient(180deg, rgba(17, 36, 22, 0.74) 0%, rgba(17, 36, 22, 0.8) 55%, rgba(17, 36, 22, 0.94) 100%),
+      url("../assets/img/chicken-pasta.jpg") !important;
+  }
+
   a[style*="padding: 16px 34px"],
   a[style*="padding: 16px 30px"],
   a[style*="padding: 15px 36px"] {
@@ -120,6 +169,17 @@ body {
   video,
   iframe {
     max-width: 100%;
+  }
+
+  /* Home "Hungry yet?" band: stack copy + delivery box above the buttons on a phone. */
+  .cta-band {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 26px !important;
+  }
+
+  .cta-band .delivery-box {
+    max-width: none !important;
   }
 }
 

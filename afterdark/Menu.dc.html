@@ -4,31 +4,59 @@
 <!-- masul:start -->
 <script>
 window.MASUL_SITE_ID="basbaas-afterdark";
+window.MASUL_NAME="BasBaas Cuisine";
 window.MASUL_ACCENT="#DEB45A";
-window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat":"Light Bites","name":"Basbaas Egg Omelet","price":6},{"cat":"Light Bites","name":"Masoub","price":7},{"cat":"Mains","name":"Marinated Quarter Chicken","price":9},{"cat":"Mains","name":"Chicken Suqaar","price":9},{"cat":"Mains","name":"Salmon Special","price":11},{"cat":"Mains","name":"Kingfish Special","price":11},{"cat":"Desserts","name":"Date Cake","price":4},{"cat":"Desserts","name":"Milk Cake","price":4}];
+// Same model as cafe-royal.uk: collection orders, table booking and reviews, each opened
+// as its own form (the floating button is reviews). Delivery runs through the Deliveroo /
+// Uber Eats / Just Eat links, so the order form is collection only.
+window.MASUL_FEATURES=["order","booking","review"];
+window.MASUL_SEPARATE_FORMS=true;
+window.MASUL_LAUNCHER="review";
+window.MASUL_COLLECTION_ONLY=true;
+window.MASUL_MENU=[{"cat":"Breakfast / Brunch","name":"Beef Suqaar (breakfast)","price":8},{"cat":"Breakfast / Brunch","name":"Basbaas Liver","price":7},{"cat":"Breakfast / Brunch","name":"Kelyo (Kidneys)","price":7},{"cat":"Breakfast / Brunch","name":"Egg Omelet","price":6},{"cat":"Meat","name":"Lamb Shank (Haniid)","price":13.95},{"cat":"Meat","name":"Lamb Shoulder (Hilib)","price":13.95},{"cat":"Meat","name":"Beef Suqaar","price":9},{"cat":"Chicken","name":"Quarter Chicken","price":9},{"cat":"Chicken","name":"Chicken Suqaar","price":9},{"cat":"Seafood","name":"Salmon Special","price":11},{"cat":"Seafood","name":"Kingfish Special","price":11},{"cat":"Desserts","name":"Date Cake","price":4},{"cat":"Desserts","name":"Milk Cake","price":4},{"cat":"Desserts","name":"Masoub","price":7}];
 </script>
-<script src="masul-widget.js"></script>
+<script src="masul-widget.js?v=2"></script>
+<script>
+/* "Add to order" buttons on dish cards: open the collection order form with that dish
+   already in the basket. Delegated on document so it survives the bundler rebuilding the DOM. */
+document.addEventListener("click", function(e){
+  var b=e.target.closest&&e.target.closest("[data-order-item]");
+  if(!b)return;
+  e.preventDefault();
+  if(!(window.MasulForms&&window.MasulForms.open)){location.href="Menu.dc.html";return;}
+  window.MasulForms.open("order",{items:[{name:b.getAttribute("data-order-item"),qty:1}]});
+  setTimeout(function(){ // bring the chosen dish into view inside the form
+    var row=[].filter.call(document.querySelectorAll(".mzf-item"),function(r){var q=r.querySelector(".mzf-q");return q&&q.textContent!=="0";})[0];
+    if(row){row.scrollIntoView({block:"center"});row.style.background="rgba(222,180,90,.18)";}
+  },60);
+});
+</script>
 <!-- masul:end -->
-<title>BasBaas Cuisine · After Dark · SE18 London</title>
+<title>Menu · BasBaas Cuisine, Woolwich SE18</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/afterdark/mobile.css">
 <script src="./support.js"></script>
 <!-- seo:auto start -->
-<meta name="description" content="BasBaas Cuisine — authentic Somali food in SE18 London. Bold flavours from the Horn of Africa built around our signature Basbaas sauce.">
+<meta name="description" content="Somali breakfast, beef and chicken suqaar, slow-cooked lamb, kingfish and salmon specials, and homemade date cake. Order for collection or delivery.">
 <link rel="canonical" href="https://basbaas-afterdark-v2.vercel.app/afterdark/Menu.dc.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BasBaas Cuisine">
-<meta property="og:title" content="BasBaas Cuisine · After Dark · SE18 London">
-<meta property="og:description" content="BasBaas Cuisine — authentic Somali food in SE18 London. Bold flavours from the Horn of Africa built around our signature Basbaas sauce.">
+<meta property="og:title" content="Menu · BasBaas Cuisine, Woolwich SE18">
+<meta property="og:description" content="Somali breakfast, beef and chicken suqaar, slow-cooked lamb, kingfish and salmon specials, and homemade date cake. Order for collection or delivery.">
 <meta property="og:url" content="https://basbaas-afterdark-v2.vercel.app/afterdark/Menu.dc.html">
 <meta property="og:locale" content="en_GB">
-<meta property="og:image" content="https://basbaas-afterdark-v2.vercel.app/assets/img/chicken-suqaar.jpg">
+<meta property="og:image" content="https://basbaas-afterdark-v2.vercel.app/og-thumb.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BasBaas Cuisine · After Dark · SE18 London">
-<meta name="twitter:description" content="BasBaas Cuisine — authentic Somali food in SE18 London. Bold flavours from the Horn of Africa built around our signature Basbaas sauce.">
-<meta name="twitter:image" content="https://basbaas-afterdark-v2.vercel.app/assets/img/chicken-suqaar.jpg">
+<meta name="twitter:title" content="Menu · BasBaas Cuisine, Woolwich SE18">
+<meta name="twitter:description" content="Somali breakfast, beef and chicken suqaar, slow-cooked lamb, kingfish and salmon specials, and homemade date cake. Order for collection or delivery.">
+<meta name="twitter:image" content="https://basbaas-afterdark-v2.vercel.app/og-thumb.jpg">
 <!-- seo:auto end -->
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Menu", "name": "BasBaas Cuisine menu", "url": "https://basbaas-afterdark-v2.vercel.app/afterdark/Menu.dc.html", "inLanguage": "en-GB", "hasMenuSection": [{"@type": "MenuSection", "name": "Breakfast / Brunch", "hasMenuItem": [{"@type": "MenuItem", "name": "Beef Suqaar (breakfast)", "offers": {"@type": "Offer", "price": "8.00", "priceCurrency": "GBP"}}, {"@type": "MenuItem", "name": "Basbaas Liver", "offers": {"@type": "Offer", "price": "7.00", "priceCurrency": "GBP"}}, {"@type": "MenuItem", "name": "Kelyo (Kidneys)", "offers": {"@type": "Offer", "price": "7.00", "priceCurrency": "GBP"}}, {"@type": "MenuItem", "name": "Egg Omelet", "offers": {"@type": "Offer", "price": "6.00", "priceCurrency": "GBP"}}]}, {"@type": "MenuSection", "name": "Meat", "hasMenuItem": [{"@type": "MenuItem", "name": "Lamb Shank (Haniid)", "offers": {"@type": "Offer", "price": "13.95", "priceCurrency": "GBP"}}, {"@type": "MenuItem", "name": "Lamb Shoulder (Hilib)", "offers": {"@type": "Offer", "price": "13.95", "priceCurrency": "GBP"}}, {"@type": "MenuItem", "name": "Beef Suqaar", "offers": {"@type": "Offer", "price": "9.00", "priceCurrency": "GBP"}}]}, {"@type": "MenuSection", "name": "Chicken", "hasMenuItem": [{"@type": "MenuItem", "name": "Quarter Chicken", "offers": {"@type": "Offer", "price": "9.00", "priceCurrency": "GBP"}}, {"@type": "MenuItem", "name": "Chicken Suqaar", "offers": {"@type": "Offer", "price": "9.00", "priceCurrency": "GBP"}}]}, {"@type": "MenuSection", "name": "Seafood", "hasMenuItem": [{"@type": "MenuItem", "name": "Salmon Special", "offers": {"@type": "Offer", "price": "11.00", "priceCurrency": "GBP"}}, {"@type": "MenuItem", "name": "Kingfish Special", "offers": {"@type": "Offer", "price": "11.00", "priceCurrency": "GBP"}}]}, {"@type": "MenuSection", "name": "Desserts", "hasMenuItem": [{"@type": "MenuItem", "name": "Date Cake", "offers": {"@type": "Offer", "price": "4.00", "priceCurrency": "GBP"}}, {"@type": "MenuItem", "name": "Milk Cake", "offers": {"@type": "Offer", "price": "4.00", "priceCurrency": "GBP"}}, {"@type": "MenuItem", "name": "Masoub", "offers": {"@type": "Offer", "price": "7.00", "priceCurrency": "GBP"}}]}]}
+</script>
 <style id="sc-sticky-header-fix">.sc-host[data-sc-name="Header"]{position:sticky;top:0;z-index:1000}</style>
 </head>
 <body>
@@ -42,7 +70,7 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
 <style> * { box-sizing:border-box; } body { margin:0; }
 @media (max-width:900px){
   div[style*="grid-template-columns"]{ grid-template-columns:1fr !important; }
-  div[style*="grid-template-columns"] > div[style*="background-image"]{ min-height:300px !important; }
+  
   div[style*="columns:3"]{ columns:2 !important; }
 }
 @media (max-width:760px){
@@ -80,7 +108,7 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
   <!-- page header -->
   <div style="padding:80px 64px 56px; text-align:center;">
     <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; color:#DEB45A; font-weight:600;">Discover our menu</div>
-    <div style="font-family:'Bebas Neue',sans-serif; font-size:96px; line-height:0.9; margin-top:12px; color:#F2EDDF;">THE MENU</div>
+    <h1 style="margin:0; font-family:'Bebas Neue',sans-serif; font-size:96px; line-height:0.9; margin-top:12px; color:#F2EDDF;">THE MENU</h1>
     <div style="font-size:18px; color:#c8d0bd; margin-top:14px; max-width:600px; margin-left:auto; margin-right:auto; line-height:1.6;">Every dish built around our signature basbaas sauce, made fresh with exceptional ingredients.</div>
   </div>
 
@@ -91,32 +119,36 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
       <span style="flex:1; height:1px; background:rgba(222,180,90,.25);"></span>
     </div>
     <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:24px;">
-      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
-        <div style="width:130px; flex:none; background-image:url('../assets/img/beef-suqaar.jpg'); background-size:cover; background-position:center;"></div>
-        <div style="padding:20px 20px 20px 0; flex:1;">
+      <div style="display:flex; flex-direction:column; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <img src="../assets/img/card/beef-suqaar.jpg" alt="Basbaas beef suqaar with salad, banana and sauces" width="1000" height="750" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;">
+        <div style="padding:20px; flex:1; display:flex; flex-direction:column;">
           <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">BASBAAS BEEF (SUQAAR)</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£8.00</span></div>
           <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Tender beef cubes pan-fried with onions, peppers &amp; spices, with rice, pasta or sabaayad.</div>
+          <div style="margin-top:auto; padding-top:16px;"><button type="button" data-order-item="Beef Suqaar (breakfast)" aria-label="Add Beef Suqaar (breakfast) to a collection order" style="background:transparent; color:#DEB45A; border:1.5px solid rgba(222,180,90,.55); padding:9px 16px; border-radius:6px; font-family:inherit; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Add to order +</button></div>
         </div>
       </div>
-      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
-        <div style="width:130px; flex:none; background-image:url('../assets/img/liver.jpg'); background-size:cover; background-position:center;"></div>
-        <div style="padding:20px 20px 20px 0; flex:1;">
+      <div style="display:flex; flex-direction:column; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <img src="../assets/img/card/liver.jpg" alt="Basbaas liver with peppers, onions and canjeero" width="1000" height="750" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;">
+        <div style="padding:20px; flex:1; display:flex; flex-direction:column;">
           <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">BASBAAS LIVER</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£7.00</span></div>
-          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Spiced with fresh onions &amp; pepperony, served with canjeero or chapati and Somali tea.</div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Spiced with fresh onions &amp; peppers, served with canjeero or chapati and Somali tea.</div>
+          <div style="margin-top:auto; padding-top:16px;"><button type="button" data-order-item="Basbaas Liver" aria-label="Add Basbaas Liver to a collection order" style="background:transparent; color:#DEB45A; border:1.5px solid rgba(222,180,90,.55); padding:9px 16px; border-radius:6px; font-family:inherit; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Add to order +</button></div>
         </div>
       </div>
-      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
-        <div style="width:130px; flex:none; background-image:url('../assets/img/kidneys.jpg'); background-size:cover; background-position:center;"></div>
-        <div style="padding:20px 20px 20px 0; flex:1;">
+      <div style="display:flex; flex-direction:column; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <img src="../assets/img/card/kelyo.jpg" alt="Kelyo, spiced kidneys with peppers, onions and chapati" width="1000" height="750" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;">
+        <div style="padding:20px; flex:1; display:flex; flex-direction:column;">
           <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">KELYO / KIDNEYS</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£7.00</span></div>
-          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Spiced with fresh onions &amp; pepperony, served with canjeero or chapati and Somali tea.</div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Spiced with fresh onions &amp; peppers, served with canjeero or chapati and Somali tea.</div>
+          <div style="margin-top:auto; padding-top:16px;"><button type="button" data-order-item="Kelyo (Kidneys)" aria-label="Add Kelyo (Kidneys) to a collection order" style="background:transparent; color:#DEB45A; border:1.5px solid rgba(222,180,90,.55); padding:9px 16px; border-radius:6px; font-family:inherit; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Add to order +</button></div>
         </div>
       </div>
-      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
-        <div style="width:130px; flex:none; background-image:url('../assets/img/omelet.jpg'); background-size:cover; background-position:center;"></div>
-        <div style="padding:20px 20px 20px 0; flex:1;">
+      <div style="display:flex; flex-direction:column; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <img src="../assets/img/card/omelet.jpg" alt="Egg omelet with tomatoes and herbs" width="1000" height="750" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;">
+        <div style="padding:20px; flex:1; display:flex; flex-direction:column;">
           <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">EGG OMELET</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£6.00</span></div>
-          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">A fluffy, freshly prepared egg omelet served with anjeero or chapati and Somali tea.</div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">A fluffy, freshly prepared egg omelet served with canjeero or chapati and Somali tea.</div>
+          <div style="margin-top:auto; padding-top:16px;"><button type="button" data-order-item="Egg Omelet" aria-label="Add Egg Omelet to a collection order" style="background:transparent; color:#DEB45A; border:1.5px solid rgba(222,180,90,.55); padding:9px 16px; border-radius:6px; font-family:inherit; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Add to order +</button></div>
         </div>
       </div>
     </div>
@@ -129,25 +161,28 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
       <span style="flex:1; height:1px; background:rgba(222,180,90,.25);"></span>
     </div>
     <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:24px;">
-      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
-        <div style="width:130px; flex:none; background-image:url('../assets/img/lamb-shank.jpg'); background-size:cover; background-position:center;"></div>
-        <div style="padding:20px 20px 20px 0; flex:1;">
+      <div style="display:flex; flex-direction:column; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <img src="../assets/img/card/lamb-shank.jpg" alt="Slow-cooked lamb shank with rice, salad and sauces" width="1000" height="750" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;">
+        <div style="padding:20px; flex:1; display:flex; flex-direction:column;">
           <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">LAMB SHANK (HANIID)</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£13.95</span></div>
           <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Slow-cooked succulent lamb shank with fresh salad, chilli sauce and bariis or pasta.</div>
+          <div style="margin-top:auto; padding-top:16px;"><button type="button" data-order-item="Lamb Shank (Haniid)" aria-label="Add Lamb Shank (Haniid) to a collection order" style="background:transparent; color:#DEB45A; border:1.5px solid rgba(222,180,90,.55); padding:9px 16px; border-radius:6px; font-family:inherit; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Add to order +</button></div>
         </div>
       </div>
-      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
-        <div style="width:130px; flex:none; background-image:url('../assets/img/lamb-shank.jpg'); background-size:cover; background-position:center;"></div>
-        <div style="padding:20px 20px 20px 0; flex:1;">
+      <div style="display:flex; flex-direction:column; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <img src="../assets/img/card/lamb-shoulder.jpg" alt="Lamb shoulder on spiced rice" width="1000" height="750" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;">
+        <div style="padding:20px; flex:1; display:flex; flex-direction:column;">
           <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">LAMB SHOULDER (HILIB)</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£13.95</span></div>
           <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Slow-cooked succulent lamb shoulder with fresh salad, chilli sauce and bariis or pasta.</div>
+          <div style="margin-top:auto; padding-top:16px;"><button type="button" data-order-item="Lamb Shoulder (Hilib)" aria-label="Add Lamb Shoulder (Hilib) to a collection order" style="background:transparent; color:#DEB45A; border:1.5px solid rgba(222,180,90,.55); padding:9px 16px; border-radius:6px; font-family:inherit; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Add to order +</button></div>
         </div>
       </div>
-      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
-        <div style="width:130px; flex:none; background-image:url('../assets/img/chicken-suqaar.jpg'); background-size:cover; background-position:center;"></div>
-        <div style="padding:20px 20px 20px 0; flex:1;">
+      <div style="display:flex; flex-direction:column; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <img src="../assets/img/card/beef-suqaar.jpg" alt="Basbaas beef suqaar with salad, banana and sauces" width="1000" height="750" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;">
+        <div style="padding:20px; flex:1; display:flex; flex-direction:column;">
           <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">BASBAAS BEEF (SUQAAR)</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£9.00</span></div>
           <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Tender beef cubes pan-fried with onions, peppers &amp; spices, with rice, pasta or sabaayad.</div>
+          <div style="margin-top:auto; padding-top:16px;"><button type="button" data-order-item="Beef Suqaar" aria-label="Add Beef Suqaar to a collection order" style="background:transparent; color:#DEB45A; border:1.5px solid rgba(222,180,90,.55); padding:9px 16px; border-radius:6px; font-family:inherit; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Add to order +</button></div>
         </div>
       </div>
     </div>
@@ -160,18 +195,20 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
       <span style="flex:1; height:1px; background:rgba(222,180,90,.25);"></span>
     </div>
     <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:24px;">
-      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
-        <div style="width:130px; flex:none; background-image:url('../assets/img/chicken-pasta.jpg'); background-size:cover; background-position:center;"></div>
-        <div style="padding:20px 20px 20px 0; flex:1;">
+      <div style="display:flex; flex-direction:column; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <img src="../assets/img/card/chicken-pasta.jpg" alt="Marinated quarter chicken with pasta, salad and sauces" width="1000" height="750" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;">
+        <div style="padding:20px; flex:1; display:flex; flex-direction:column;">
           <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">QUARTER CHICKEN</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£9.00</span></div>
           <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Marinated in our special spices, with fresh salad, chilli sauce and bariis or pasta.</div>
+          <div style="margin-top:auto; padding-top:16px;"><button type="button" data-order-item="Quarter Chicken" aria-label="Add Quarter Chicken to a collection order" style="background:transparent; color:#DEB45A; border:1.5px solid rgba(222,180,90,.55); padding:9px 16px; border-radius:6px; font-family:inherit; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Add to order +</button></div>
         </div>
       </div>
-      <div style="display:flex; gap:20px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
-        <div style="width:130px; flex:none; background-image:url('../assets/img/chicken-suqaar.jpg'); background-size:cover; background-position:center;"></div>
-        <div style="padding:20px 20px 20px 0; flex:1;">
+      <div style="display:flex; flex-direction:column; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <img src="../assets/img/card/chicken-suqaar.jpg" alt="Chicken suqaar in the pan" width="1000" height="750" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;">
+        <div style="padding:20px; flex:1; display:flex; flex-direction:column;">
           <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">CHICKEN SUQAAR</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£9.00</span></div>
           <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Tender chicken cubes pan-fried with onions, peppers &amp; spices, with rice, pasta or sabaayad.</div>
+          <div style="margin-top:auto; padding-top:16px;"><button type="button" data-order-item="Chicken Suqaar" aria-label="Add Chicken Suqaar to a collection order" style="background:transparent; color:#DEB45A; border:1.5px solid rgba(222,180,90,.55); padding:9px 16px; border-radius:6px; font-family:inherit; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Add to order +</button></div>
         </div>
       </div>
     </div>
@@ -184,13 +221,21 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
       <span style="flex:1; height:1px; background:rgba(222,180,90,.25);"></span>
     </div>
     <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:24px;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; padding:24px;">
-        <div><div style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">SALMON SPECIAL</div><div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Fresh salmon seasoned with special spices, grilled or pan-seared, with rice or pasta.</div></div>
-        <span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£11.00</span>
+      <div style="display:flex; flex-direction:column; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <img src="../assets/img/card/salmon.jpg" alt="Salmon special with rice and sauces" width="1000" height="750" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;">
+        <div style="padding:20px; flex:1; display:flex; flex-direction:column;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">SALMON SPECIAL</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£11.00</span></div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Fresh salmon seasoned with special spices, grilled or pan-seared, with rice or pasta.</div>
+          <div style="margin-top:auto; padding-top:16px;"><button type="button" data-order-item="Salmon Special" aria-label="Add Salmon Special to a collection order" style="background:transparent; color:#DEB45A; border:1.5px solid rgba(222,180,90,.55); padding:9px 16px; border-radius:6px; font-family:inherit; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Add to order +</button></div>
+        </div>
       </div>
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; padding:24px;">
-        <div><div style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">KINGFISH SPECIAL</div><div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Fresh kingfish seasoned with special spices, fried and served with rice, soor or pasta.</div></div>
-        <span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£11.00</span>
+      <div style="display:flex; flex-direction:column; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <img src="../assets/img/card/kingfish.jpg" alt="Fried kingfish steaks with rice, salad and sauces" width="1000" height="750" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;">
+        <div style="padding:20px; flex:1; display:flex; flex-direction:column;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">KINGFISH SPECIAL</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£11.00</span></div>
+          <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Fresh kingfish seasoned with special spices, fried and served with rice, soor or pasta.</div>
+          <div style="margin-top:auto; padding-top:16px;"><button type="button" data-order-item="Kingfish Special" aria-label="Add Kingfish Special to a collection order" style="background:transparent; color:#DEB45A; border:1.5px solid rgba(222,180,90,.55); padding:9px 16px; border-radius:6px; font-family:inherit; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Add to order +</button></div>
+        </div>
       </div>
     </div>
   </div>
@@ -202,25 +247,28 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
       <span style="flex:1; height:1px; background:rgba(222,180,90,.25);"></span>
     </div>
     <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
-      <div style="background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
-        <div style="height:180px; background-image:url('../assets/img/date-cake.jpg'); background-size:cover; background-position:center;"></div>
-        <div style="padding:22px;">
+      <div style="display:flex; flex-direction:column; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <img src="../assets/img/card/date-cake.jpg" alt="Date cake with ice cream and sauce" width="1000" height="750" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;">
+        <div style="padding:22px; flex:1; display:flex; flex-direction:column;">
           <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">DATE CAKE</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£4.00</span></div>
           <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Moist, freshly baked in-house date cake with ice cream and our signature special sauce.</div>
+          <div style="margin-top:auto; padding-top:16px;"><button type="button" data-order-item="Date Cake" aria-label="Add Date Cake to a collection order" style="background:transparent; color:#DEB45A; border:1.5px solid rgba(222,180,90,.55); padding:9px 16px; border-radius:6px; font-family:inherit; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Add to order +</button></div>
         </div>
       </div>
-      <div style="background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
-        <div style="height:180px; background-image:url('../assets/img/date-cake.jpg'); background-size:cover; background-position:center;"></div>
-        <div style="padding:22px;">
+      <div style="display:flex; flex-direction:column; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <img src="../assets/img/card/milk-cake.jpg" alt="Milk cake" width="1000" height="750" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;">
+        <div style="padding:22px; flex:1; display:flex; flex-direction:column;">
           <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">MILK CAKE</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£4.00</span></div>
           <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Soft, freshly made milk cake, delicately sweet and served chilled. Loved by the whole family.</div>
+          <div style="margin-top:auto; padding-top:16px;"><button type="button" data-order-item="Milk Cake" aria-label="Add Milk Cake to a collection order" style="background:transparent; color:#DEB45A; border:1.5px solid rgba(222,180,90,.55); padding:9px 16px; border-radius:6px; font-family:inherit; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Add to order +</button></div>
         </div>
       </div>
-      <div style="background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
-        <div style="height:180px; background-image:url('../assets/img/sabaayad.jpg'); background-size:cover; background-position:center;"></div>
-        <div style="padding:22px;">
+      <div style="display:flex; flex-direction:column; background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; overflow:hidden;">
+        <img src="../assets/img/card/masoub.jpg" alt="Masoub, mashed banana and chapati with cream, honey and black seeds" width="1000" height="750" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover;">
+        <div style="padding:22px; flex:1; display:flex; flex-direction:column;">
           <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:0.02em;">MASOUB</span><span style="background:#DEB45A; color:#112416; padding:4px 11px; border-radius:4px; font-weight:700; font-size:14px; white-space:nowrap;">£7.00</span></div>
           <div style="font-size:13px; color:#9fa893; line-height:1.5; margin-top:6px;">Mashed banana, chapati, fresh cream and honey, topped with black seeds — a sweet finish.</div>
+          <div style="margin-top:auto; padding-top:16px;"><button type="button" data-order-item="Masoub" aria-label="Add Masoub to a collection order" style="background:transparent; color:#DEB45A; border:1.5px solid rgba(222,180,90,.55); padding:9px 16px; border-radius:6px; font-family:inherit; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Add to order +</button></div>
         </div>
       </div>
     </div>
@@ -228,12 +276,21 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
 
   <!-- CTA -->
   <div style="background:#DEB45A; padding:72px 64px; text-align:center;">
-    <div style="font-family:'Bebas Neue',sans-serif; font-size:64px; color:#112416;">READY TO ORDER?</div>
-    <div style="font-size:17px; color:#3a4a2f; margin-top:8px;">Dine in, takeaway, or book your table at Basbaas.</div>
+    <h2 style="margin:0; font-family:'Bebas Neue',sans-serif; font-size:64px; color:#112416;">READY TO ORDER?</h2>
+    <div style="font-size:17px; color:#3a4a2f; margin-top:8px;">Order for collection, book a table, or get it delivered by our partners.</div>
     <div style="display:flex; gap:14px; justify-content:center; margin-top:26px;">
-      <a data-masul-open="booking" href="Contact.dc.html" style="background:#112416; color:#F2EDDF; padding:16px 32px; border-radius:6px; font-size:15px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; text-decoration:none;">Book a table</a>
-      <a href="Contact.dc.html" style="background:#fff; color:#112416; padding:16px 32px; border-radius:6px; font-size:15px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; text-decoration:none;">Contact us</a>
+      <a data-masul-open="order" href="Menu.dc.html" style="background:#112416; color:#F2EDDF; padding:16px 32px; border-radius:6px; font-size:15px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; text-decoration:none;">Order for collection</a>
+      <a data-masul-open="booking" href="Contact.dc.html" style="background:#fff; color:#112416; padding:16px 32px; border-radius:6px; font-size:15px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; text-decoration:none;">Book a table</a>
     </div>
+      <div class="delivery-box" style="margin:28px auto 0; background:#112416; border-radius:10px; padding:18px 20px; max-width:560px; text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:0.04em; line-height:1; color:#F2EDDF;">DELIVERED TO YOUR DOOR</div>
+        <div style="font-size:14px; color:#c8d0bd; margin:6px 0 14px;">Every day, 8:00 – 22:00 · via our delivery partners</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+<a href="https://deliveroo.co.uk/menu/london/woolwich/basbaas-authentic-somali-cuisine" target="_blank" rel="noopener" style="background:#16301d; border:1.5px solid rgba(222,180,90,.6); color:#F2EDDF; padding:10px 16px; border-radius:6px; font-size:14px; font-weight:600; letter-spacing:0.03em; text-decoration:none; display:inline-flex; align-items:center; gap:8px;"><span aria-hidden="true" style="width:10px; height:10px; border-radius:50%; display:inline-block; background:#00CCBC;"></span>Order on Deliveroo</a>
+<a href="https://www.ubereats.com/gb/store/basbaas-somali-cuisine/hlX331x_T5ShCUge9xyjww" target="_blank" rel="noopener" style="background:#16301d; border:1.5px solid rgba(222,180,90,.6); color:#F2EDDF; padding:10px 16px; border-radius:6px; font-size:14px; font-weight:600; letter-spacing:0.03em; text-decoration:none; display:inline-flex; align-items:center; gap:8px;"><span aria-hidden="true" style="width:10px; height:10px; border-radius:50%; display:inline-block; background:#06C167;"></span>Order on Uber Eats</a>
+<a href="https://www.just-eat.co.uk/restaurants-basbaas-authentic-somali-cuisine-woolwich" target="_blank" rel="noopener" style="background:#16301d; border:1.5px solid rgba(222,180,90,.6); color:#F2EDDF; padding:10px 16px; border-radius:6px; font-size:14px; font-weight:600; letter-spacing:0.03em; text-decoration:none; display:inline-flex; align-items:center; gap:8px;"><span aria-hidden="true" style="width:10px; height:10px; border-radius:50%; display:inline-block; background:#FF8000;"></span>Order on Just Eat</a>
+        </div>
+      </div>
   </div>
 
   <dc-import name="Footer" hint-size="100%,340px"></dc-import>

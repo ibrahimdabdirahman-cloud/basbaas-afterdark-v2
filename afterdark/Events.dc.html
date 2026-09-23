@@ -4,30 +4,55 @@
 <!-- masul:start -->
 <script>
 window.MASUL_SITE_ID="basbaas-afterdark";
+window.MASUL_NAME="BasBaas Cuisine";
 window.MASUL_ACCENT="#DEB45A";
-window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat":"Light Bites","name":"Basbaas Egg Omelet","price":6},{"cat":"Light Bites","name":"Masoub","price":7},{"cat":"Mains","name":"Marinated Quarter Chicken","price":9},{"cat":"Mains","name":"Chicken Suqaar","price":9},{"cat":"Mains","name":"Salmon Special","price":11},{"cat":"Mains","name":"Kingfish Special","price":11},{"cat":"Desserts","name":"Date Cake","price":4},{"cat":"Desserts","name":"Milk Cake","price":4}];
+// Same model as cafe-royal.uk: collection orders, table booking and reviews, each opened
+// as its own form (the floating button is reviews). Delivery runs through the Deliveroo /
+// Uber Eats / Just Eat links, so the order form is collection only.
+window.MASUL_FEATURES=["order","booking","review"];
+window.MASUL_SEPARATE_FORMS=true;
+window.MASUL_LAUNCHER="review";
+window.MASUL_COLLECTION_ONLY=true;
+window.MASUL_MENU=[{"cat":"Breakfast / Brunch","name":"Beef Suqaar (breakfast)","price":8},{"cat":"Breakfast / Brunch","name":"Basbaas Liver","price":7},{"cat":"Breakfast / Brunch","name":"Kelyo (Kidneys)","price":7},{"cat":"Breakfast / Brunch","name":"Egg Omelet","price":6},{"cat":"Meat","name":"Lamb Shank (Haniid)","price":13.95},{"cat":"Meat","name":"Lamb Shoulder (Hilib)","price":13.95},{"cat":"Meat","name":"Beef Suqaar","price":9},{"cat":"Chicken","name":"Quarter Chicken","price":9},{"cat":"Chicken","name":"Chicken Suqaar","price":9},{"cat":"Seafood","name":"Salmon Special","price":11},{"cat":"Seafood","name":"Kingfish Special","price":11},{"cat":"Desserts","name":"Date Cake","price":4},{"cat":"Desserts","name":"Milk Cake","price":4},{"cat":"Desserts","name":"Masoub","price":7}];
 </script>
-<script src="masul-widget.js"></script>
+<script src="masul-widget.js?v=2"></script>
+<script>
+/* "Add to order" buttons on dish cards: open the collection order form with that dish
+   already in the basket. Delegated on document so it survives the bundler rebuilding the DOM. */
+document.addEventListener("click", function(e){
+  var b=e.target.closest&&e.target.closest("[data-order-item]");
+  if(!b)return;
+  e.preventDefault();
+  if(!(window.MasulForms&&window.MasulForms.open)){location.href="Menu.dc.html";return;}
+  window.MasulForms.open("order",{items:[{name:b.getAttribute("data-order-item"),qty:1}]});
+  setTimeout(function(){ // bring the chosen dish into view inside the form
+    var row=[].filter.call(document.querySelectorAll(".mzf-item"),function(r){var q=r.querySelector(".mzf-q");return q&&q.textContent!=="0";})[0];
+    if(row){row.scrollIntoView({block:"center"});row.style.background="rgba(222,180,90,.18)";}
+  },60);
+});
+</script>
 <!-- masul:end -->
-<title>BasBaas Cuisine · After Dark · SE18 London</title>
+<title>Private Events &amp; Catering · BasBaas Cuisine, SE18</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/afterdark/mobile.css">
 <script src="./support.js"></script>
 <!-- seo:auto start -->
-<meta name="description" content="BasBaas Cuisine — authentic Somali food in SE18 London. Bold flavours from the Horn of Africa built around our signature Basbaas sauce.">
+<meta name="description" content="Host a supper club, birthday or family celebration at BasBaas in Woolwich, or order Somali platters and catering for your event. Send us an enquiry.">
 <link rel="canonical" href="https://basbaas-afterdark-v2.vercel.app/afterdark/Events.dc.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BasBaas Cuisine">
-<meta property="og:title" content="BasBaas Cuisine · After Dark · SE18 London">
-<meta property="og:description" content="BasBaas Cuisine — authentic Somali food in SE18 London. Bold flavours from the Horn of Africa built around our signature Basbaas sauce.">
+<meta property="og:title" content="Private Events &amp; Catering · BasBaas Cuisine, SE18">
+<meta property="og:description" content="Host a supper club, birthday or family celebration at BasBaas in Woolwich, or order Somali platters and catering for your event. Send us an enquiry.">
 <meta property="og:url" content="https://basbaas-afterdark-v2.vercel.app/afterdark/Events.dc.html">
 <meta property="og:locale" content="en_GB">
-<meta property="og:image" content="https://basbaas-afterdark-v2.vercel.app/assets/img/chicken-suqaar.jpg">
+<meta property="og:image" content="https://basbaas-afterdark-v2.vercel.app/og-thumb.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BasBaas Cuisine · After Dark · SE18 London">
-<meta name="twitter:description" content="BasBaas Cuisine — authentic Somali food in SE18 London. Bold flavours from the Horn of Africa built around our signature Basbaas sauce.">
-<meta name="twitter:image" content="https://basbaas-afterdark-v2.vercel.app/assets/img/chicken-suqaar.jpg">
+<meta name="twitter:title" content="Private Events &amp; Catering · BasBaas Cuisine, SE18">
+<meta name="twitter:description" content="Host a supper club, birthday or family celebration at BasBaas in Woolwich, or order Somali platters and catering for your event. Send us an enquiry.">
+<meta name="twitter:image" content="https://basbaas-afterdark-v2.vercel.app/og-thumb.jpg">
 <!-- seo:auto end -->
 <style id="sc-sticky-header-fix">.sc-host[data-sc-name="Header"]{position:sticky;top:0;z-index:1000}</style>
 </head>
@@ -42,7 +67,7 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
 <style> * { box-sizing:border-box; } body { margin:0; }
 @media (max-width:900px){
   div[style*="grid-template-columns"]{ grid-template-columns:1fr !important; }
-  div[style*="grid-template-columns"] > div[style*="background-image"]{ min-height:300px !important; }
+  
   div[style*="columns:3"]{ columns:2 !important; }
 }
 @media (max-width:760px){
@@ -81,17 +106,17 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
   <div style="display:grid; grid-template-columns:1fr 1fr; min-height:580px;">
     <div style="padding:88px 64px; display:flex; flex-direction:column; justify-content:center;">
       <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; color:#DEB45A; font-weight:600;">Private events &amp; hall hire</div>
-      <div style="font-family:'Bebas Neue',sans-serif; font-size:84px; line-height:0.88; margin-top:14px; color:#F2EDDF;">HOST YOUR <span style="color:#DEB45A;">CELEBRATION</span> WITH US.</div>
+      <h1 style="margin:0; font-family:'Bebas Neue',sans-serif; font-size:84px; line-height:0.88; margin-top:14px; color:#F2EDDF;">HOST YOUR <span style="color:#DEB45A;">CELEBRATION</span> WITH US.</h1>
       <div style="font-size:18px; line-height:1.65; color:#c8d0bd; margin-top:22px; max-width:460px;">From supper clubs to family gatherings, Basbaas creates memorable evenings with authentic Somali feasts, warm hospitality and beautiful decor.</div>
       <a href="#enquire" style="margin-top:32px; background:#DEB45A; color:#112416; padding:16px 34px; border-radius:6px; font-size:15px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; align-self:flex-start; text-decoration:none;">Enquire now</a>
     </div>
-    <div style="background-image:url('../assets/img/chicken-pasta.jpg'); background-size:cover; background-position:center;"></div>
+    <div role="img" aria-label="The BasBaas dining room: green velvet banquettes, marble tables and gold pendant lights" style="background-image:url('../assets/img/interior.jpg'); aspect-ratio:1600/1200; background-size:cover; background-position:center;"></div>
   </div>
 
   <!-- offerings -->
   <div style="padding:84px 64px; background:#0d1b11;">
     <div style="text-align:center; margin-bottom:48px;">
-      <div style="font-family:'Bebas Neue',sans-serif; font-size:58px; color:#F2EDDF;">WHAT WE OFFER</div>
+      <h2 style="margin:0; font-family:'Bebas Neue',sans-serif; font-size:58px; color:#F2EDDF;">WHAT WE OFFER</h2>
     </div>
     <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; max-width:1100px; margin:0 auto;">
       <div style="background:#16301d; border:1px solid rgba(222,180,90,.16); border-radius:10px; padding:34px;">
@@ -121,16 +146,56 @@ window.MASUL_MENU=[{"cat":"Light Bites","name":"Basbaas Liver","price":7},{"cat"
     <div style="max-width:760px; margin:0 auto;">
       <div style="text-align:center; margin-bottom:36px;">
         <div style="font-size:13px; letter-spacing:0.18em; text-transform:uppercase; font-weight:700; color:#3a4a2f;">Make an enquiry</div>
-        <div style="font-family:'Bebas Neue',sans-serif; font-size:56px; margin-top:6px; color:#112416;">TELL US ABOUT YOUR EVENT</div>
+        <h2 style="margin:0; font-family:'Bebas Neue',sans-serif; font-size:56px; margin-top:6px; color:#112416;">TELL US ABOUT YOUR EVENT</h2>
       </div>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
-        <input placeholder="Your name" style="padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF;">
-        <input placeholder="Phone number" style="padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF;">
-        <input placeholder="Email address" style="padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF;">
-        <input placeholder="Date &amp; number of guests" style="padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF;">
-        <textarea placeholder="Tell us about your event…" rows="4" style="grid-column:1 / -1; padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF; resize:vertical;"></textarea>
+        <input id="evName" autocomplete="name" placeholder="Your name" aria-label="Your name" style="padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF;">
+        <input id="evPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Phone number" aria-label="Phone number" style="padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF;">
+        <input id="evEmail" type="email" autocomplete="email" placeholder="Email (optional)" aria-label="Email address (optional)" style="padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF;">
+        <select id="evType" aria-label="Type of event" style="padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF;">
+          <option value="Private dining">Private dining</option>
+          <option value="Supper club">Supper club</option>
+          <option value="Catering &amp; platters">Catering &amp; platters</option>
+          <option value="Something else">Something else</option>
+        </select>
+        <input id="evDate" type="date" aria-label="Event date" style="padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF;">
+        <input id="evGuests" type="number" min="1" inputmode="numeric" placeholder="Number of guests" aria-label="Number of guests" style="padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF;">
+        <textarea id="evNotes" placeholder="Tell us about your event…" aria-label="Tell us about your event" rows="4" style="grid-column:1 / -1; padding:15px 18px; border-radius:8px; border:none; font-size:15px; font-family:inherit; background:#112416; color:#F2EDDF; resize:vertical;"></textarea>
       </div>
-      <button style="margin-top:22px; width:100%; background:#112416; color:#F2EDDF; padding:17px; border-radius:8px; border:none; font-size:15px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; font-family:inherit; cursor:pointer;">Send enquiry</button>
+      <button id="evSend" type="button" style="margin-top:22px; width:100%; background:#112416; color:#F2EDDF; padding:17px; border-radius:8px; border:none; font-size:15px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; font-family:inherit; cursor:pointer;">Send enquiry</button>
+      <div id="evStatus" role="status" style="margin-top:12px; font-size:15px; font-weight:600; min-height:20px; color:#112416; text-align:center;"></div>
+      <script>
+      (function(){
+        // The Send button used to do nothing. Enquiries now go through the Masul backend as a
+        // booking marked PRIVATE EVENT (it needs a time and caps party at 40, so the real
+        // guest count and details ride in the notes), with an email fallback.
+        document.addEventListener('click', function(e){
+          if(!e.target.closest('#evSend')) return;
+          e.preventDefault();
+          var g=function(id){var el=document.getElementById(id);return el?String(el.value||'').trim():'';};
+          var s=document.getElementById('evStatus');
+          var d={name:g('evName'),phone:g('evPhone'),email:g('evEmail'),type:g('evType'),date:g('evDate'),guests:g('evGuests'),notes:g('evNotes')};
+          if(!d.name||!d.phone||!d.date){ if(s){s.style.color='#7a1d1d';s.textContent='Please add your name, phone number and the event date.';} return; }
+          var summary='PRIVATE EVENT ENQUIRY: '+d.type+(d.guests?' for '+d.guests+' guests':'')+(d.email?' · '+d.email:'')+(d.notes?' · '+d.notes:'');
+          var payload={name:d.name,phone:d.phone,email:d.email,date:d.date,time:'Event',party:Math.min(40,Math.max(1,parseInt(d.guests,10)||1)),notes:summary};
+          var mail=function(){
+            window.location.href='mailto:basbaas28@gmail.com?subject='+encodeURIComponent('Private event enquiry from '+d.name)+'&body='+encodeURIComponent('Name: '+d.name+'\nPhone: '+d.phone+'\nEmail: '+d.email+'\nEvent: '+d.type+'\nDate: '+d.date+'\nGuests: '+d.guests+'\n\n'+d.notes);
+            if(s){s.style.color='#112416';s.textContent='Opening your email app…';}
+          };
+          if(s){s.style.color='#112416';s.textContent='Sending…';}
+          if(window.MasulForms&&window.MasulForms.submit){
+            window.MasulForms.submit('booking',payload).then(function(r){
+              if(r&&r.ok){ if(s){s.style.color='#112416';s.textContent="Thank you, "+d.name.split(' ')[0]+". We have your enquiry and will call you to plan it.";} }
+              else if(r&&r.errors&&r.errors.length&&r.errors[0].indexOf('Network')<0){ if(s){s.style.color='#7a1d1d';s.textContent=r.errors.join(' ');} }
+              else mail();
+            });
+          } else mail();
+        });
+        document.addEventListener('focusin', function(e){
+          if(e.target&&e.target.id==='evDate'&&!e.target.min) e.target.min=new Date().toISOString().slice(0,10);
+        });
+      })();
+      </script>
     </div>
   </div>
 

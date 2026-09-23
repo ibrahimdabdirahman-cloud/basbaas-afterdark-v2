@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Basbaas · Somali Soul Food</title>
-<link rel="icon" href="assets/brand/favicon-32.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
 <meta http-equiv="refresh" content="0; url=afterdark/Home.dc.html">
-<link rel="canonical" href="afterdark/Home.dc.html">
+<link rel="canonical" href="https://basbaas-afterdark-v2.vercel.app/afterdark/Home.dc.html">
 <style>
   html,body{margin:0;height:100%;background:#112416;color:#F2EDDF;font-family:system-ui,sans-serif;}
   .wrap{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;}
@@ -24,21 +24,45 @@
 <meta name="twitter:description" content="BasBaas Cuisine — authentic Somali food in SE18 London. Bold flavours from the Horn of Africa built around our signature Basbaas sauce.">
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "Restaurant",
-  "name": "BasBaas Cuisine",
-  "description": "BasBaas Cuisine — authentic Somali food in SE18 London. Bold flavours from the Horn of Africa built around our signature Basbaas sauce.",
-  "url": "https://basbaas-afterdark-v2.vercel.app/",
-  "telephone": "+44 20 3196 2607",
-  "address": {
-    "@type": "PostalAddress",
-    "addressCountry": "GB",
-    "addressLocality": "London",
-    "addressRegion": "London"
-  },
-  "servesCuisine": "Somali",
-  "email": "basbaas28@gmail.com",
-  "image": "https://basbaas-afterdark-v2.vercel.app/assets/img/chicken-suqaar.jpg"
+ "@context": "https://schema.org",
+ "@type": "Restaurant",
+ "@id": "https://basbaas-afterdark-v2.vercel.app/#restaurant",
+ "name": "BasBaas Cuisine",
+ "alternateName": "Basbaas Authentic Somali Cuisine",
+ "description": "Authentic Somali food at 21 Anglesea Road, Woolwich SE18. Suqaar, slow-cooked lamb, canjeero and our signature basbaas sauce. Dine in, order for collection or get it delivered.",
+ "url": "https://basbaas-afterdark-v2.vercel.app/afterdark/Home.dc.html",
+ "image": [
+  "https://basbaas-afterdark-v2.vercel.app/og-thumb.jpg",
+  "https://basbaas-afterdark-v2.vercel.app/assets/img/interior.jpg"
+ ],
+ "logo": "https://basbaas-afterdark-v2.vercel.app/assets/brand/favicon-512.png",
+ "telephone": "+44 20 3196 2607",
+ "email": "basbaas28@gmail.com",
+ "address": {
+  "@type": "PostalAddress",
+  "streetAddress": "21 Anglesea Road",
+  "addressLocality": "London",
+  "postalCode": "SE18 6EG",
+  "addressCountry": "GB"
+ },
+ "geo": {
+  "@type": "GeoCoordinates",
+  "latitude": 51.488555,
+  "longitude": 0.067921
+ },
+ "servesCuisine": [
+  "Somali",
+  "East African"
+ ],
+ "priceRange": "£",
+ "hasMenu": "https://basbaas-afterdark-v2.vercel.app/afterdark/Menu.dc.html",
+ "acceptsReservations": true,
+ "sameAs": [
+  "https://www.instagram.com/bas_baas_restaurant/",
+  "https://www.ubereats.com/gb/store/basbaas-somali-cuisine/hlX331x_T5ShCUge9xyjww",
+  "https://www.just-eat.co.uk/restaurants-basbaas-authentic-somali-cuisine-woolwich",
+  "https://deliveroo.co.uk/menu/london/woolwich/basbaas-authentic-somali-cuisine"
+ ]
 }
 </script>
 <!-- seo:auto end -->
@@ -50,9 +74,9 @@
 </head>
 <body>
   <div class="wrap">
-    <div style="font-size:15px;letter-spacing:.2em;text-transform:uppercase;opacity:.7;">Basbaas · Somali Soul Food</div>
+    <h1 style="margin:0;font-size:15px;letter-spacing:.2em;text-transform:uppercase;opacity:.7;font-weight:600;">Basbaas · Somali Soul Food</h1>
     <a href="afterdark/Home.dc.html">Enter the site →</a>
   </div>
-  <script>window.location.replace('afterdark/Home.dc.html');</script>
+  <script>window.location.replace('afterdark/Home.dc.html'+location.search);</script>
 </body>
 </html>

@@ -6,30 +6,6 @@
     {
       "source": "/",
       "destination": "/index.html"
-    },
-    {
-      "source": "/home",
-      "destination": "/afterdark/Home.dc.html"
-    },
-    {
-      "source": "/menu",
-      "destination": "/afterdark/Menu.dc.html"
-    },
-    {
-      "source": "/about",
-      "destination": "/afterdark/About.dc.html"
-    },
-    {
-      "source": "/events",
-      "destination": "/afterdark/Events.dc.html"
-    },
-    {
-      "source": "/gallery",
-      "destination": "/afterdark/Gallery.dc.html"
-    },
-    {
-      "source": "/contact",
-      "destination": "/afterdark/Contact.dc.html"
     }
   ],
   "headers": [
@@ -66,6 +42,38 @@
           "value": "geolocation=(), microphone=(), camera=()"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/home",
+      "destination": "/afterdark/Home.dc.html",
+      "permanent": true
+    },
+    {
+      "source": "/menu",
+      "destination": "/afterdark/Menu.dc.html",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/afterdark/About.dc.html",
+      "permanent": true
+    },
+    {
+      "source": "/events",
+      "destination": "/afterdark/Events.dc.html",
+      "permanent": true
+    },
+    {
+      "source": "/gallery",
+      "destination": "/afterdark/Gallery.dc.html",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/afterdark/Contact.dc.html",
+      "permanent": true
     }
   ]
 }
