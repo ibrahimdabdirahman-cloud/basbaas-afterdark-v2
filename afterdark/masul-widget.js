@@ -15,6 +15,8 @@
  *    - any element with [data-masul-open="order|booking|appointment|review"] to open that tab
  *    - any container with [data-masul-reviews] to show approved reviews
  *    - window.MasulForms.submit(type, data) for custom integrations
+ *    - window.MasulForms.open("order", { items:[{name, qty}] }) to open the order form
+ *      with a site basket already filled in (names must match MASUL_MENU)
  */
 (function () {
   "use strict";
@@ -22,6 +24,18 @@
   var API = window.MASUL_API_BASE || (LOCAL ? "http://localhost:3000" : "https://masul-forms-backend.vercel.app");
   var SITE = window.MASUL_SITE_ID || "";
   var ACCENT = window.MASUL_ACCENT || "#b8472a";
+  // Text on accent-filled controls: white or near-black, whichever reads better on this accent.
+  var ON_ACCENT = (function (c) {
+    var m = /^#?([0-9a-f]{6}|[0-9a-f]{3})$/i.exec(String(c).trim());
+    if (!m) return "#fff";
+    var h = m[1].length === 3 ? m[1].replace(/./g, "$&$&") : m[1];
+    var lum = [0, 2, 4].map(function (i) {
+      var v = parseInt(h.substr(i, 2), 16) / 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    var L = 0.2126 * lum[0] + 0.7152 * lum[1] + 0.0722 * lum[2];
+    return 1.05 / (L + 0.05) >= (L + 0.05) / 0.0616 ? "#fff" : "#1c1c1c";
+  })(ACCENT);
   var MENU = Array.isArray(window.MASUL_MENU) ? window.MASUL_MENU : [];
   var SERVICES = Array.isArray(window.MASUL_SERVICES) ? window.MASUL_SERVICES : [];
   var LABELS = {
@@ -32,7 +46,14 @@
   };
   if (!SITE) { console.warn("[masul] window.MASUL_SITE_ID is not set — widget disabled"); return; }
 
-  var state = { features: window.MASUL_FEATURES || null, name: "", open: false, tab: null, cart: {} };
+  // Cafe Royal options: SEPARATE_FORMS shows only the form a button opened (no tab
+  // switching); LAUNCHER picks the floating button's form; COLLECTION_ONLY drops the
+  // delivery choice (delivery runs through the Deliveroo / Uber Eats links).
+  var SEPARATE_FORMS = !!window.MASUL_SEPARATE_FORMS;
+  var LAUNCHER = window.MASUL_LAUNCHER || "";
+  var COLLECTION_ONLY = !!window.MASUL_COLLECTION_ONLY;
+  if (COLLECTION_ONLY) LABELS.order = "Order for collection";
+  var state = { features: window.MASUL_FEATURES || null, name: "", open: false, tab: null, cart: {}, prefill: null };
 
   /* ---------- helpers ---------- */
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -71,7 +92,7 @@
     if (document.getElementById("mzf-css")) return;
     var css = `
 .mzf-launch{position:fixed;right:18px;bottom:18px;z-index:2147483000;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;max-width:80vw}
-.mzf-launch button{font:600 15px/1 system-ui,Segoe UI,Arial,sans-serif;color:#fff;background:var(--mzf-accent);border:0;border-radius:999px;padding:13px 20px;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer;transition:transform .12s ease,filter .12s}
+.mzf-launch button{font:600 15px/1 system-ui,Segoe UI,Arial,sans-serif;color:var(--mzf-on-accent);background:var(--mzf-accent);border:0;border-radius:999px;padding:13px 20px;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer;transition:transform .12s ease,filter .12s}
 .mzf-launch button:hover{transform:translateY(-1px);filter:brightness(1.05)}
 .mzf-launch button.mzf-ghost{background:#fff;color:#222;border:1px solid rgba(0,0,0,.12)}
 .mzf-overlay{position:fixed;inset:0;z-index:2147483600;background:rgba(15,17,21,.55);backdrop-filter:blur(3px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
@@ -84,7 +105,7 @@
 .mzf-x{border:0;background:#f1f1f1;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;line-height:1}
 .mzf-tabs{display:flex;gap:6px;padding:12px 14px 0;flex-wrap:wrap}
 .mzf-tabs button{border:0;background:#f3f3f3;color:#444;border-radius:999px;padding:8px 14px;font:600 13px/1 inherit;cursor:pointer}
-.mzf-tabs button.mzf-active{background:var(--mzf-accent);color:#fff}
+.mzf-tabs button.mzf-active{background:var(--mzf-accent);color:var(--mzf-on-accent)}
 .mzf-body{padding:14px 18px 22px}
 .mzf-field{margin:0 0 12px}
 .mzf-field label{display:block;font-size:12px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:#666;margin:0 0 5px}
@@ -93,23 +114,24 @@
 .mzf-row{display:flex;gap:10px}.mzf-row>*{flex:1}
 .mzf-chips{display:flex;gap:8px;flex-wrap:wrap}
 .mzf-chips button{border:1px solid #ddd;background:#fafafa;border-radius:10px;padding:9px 14px;cursor:pointer;font:600 14px/1 inherit}
-.mzf-chips button.mzf-on{background:var(--mzf-accent);color:#fff;border-color:var(--mzf-accent)}
+.mzf-chips button.mzf-on{background:var(--mzf-accent);color:var(--mzf-on-accent);border-color:var(--mzf-accent)}
 .mzf-stars{display:flex;gap:4px;font-size:30px;color:#ddd;cursor:pointer}
-.mzf-stars span.mzf-lit{color:#e0a528}
+.mzf-stars button{background:none;border:0;padding:0 2px;margin:0;font:inherit;line-height:1.1;color:inherit;cursor:pointer;border-radius:6px}
+.mzf-stars button.mzf-lit{color:#e0a528}
 .mzf-menu{border:1px solid #eee;border-radius:12px;overflow:hidden;margin-bottom:12px}
-.mzf-cat{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:#888;background:#f7f7f7;padding:8px 12px}
+.mzf-cat{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:#666;background:#f7f7f7;padding:8px 12px}
 .mzf-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-top:1px solid #f0f0f0}
 .mzf-item .mzf-nm{flex:1}.mzf-item .mzf-pr{color:#666;font-variant-numeric:tabular-nums}
 .mzf-step{display:flex;align-items:center;gap:8px}
 .mzf-step button{width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#fff;font-size:16px;cursor:pointer;line-height:1}
 .mzf-step span{min-width:18px;text-align:center;font-weight:700}
-.mzf-total{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:17px;margin:6px 2px 14px}
-.mzf-btn{width:100%;border:0;background:var(--mzf-accent);color:#fff;border-radius:12px;padding:14px;font:800 16px/1 inherit;cursor:pointer}
+.mzf-total{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:17px;margin:6px -2px 14px;padding:12px 4px;position:sticky;bottom:0;background:#fff;border-top:1px solid #eee;z-index:1}
+.mzf-btn{width:100%;border:0;background:var(--mzf-accent);color:var(--mzf-on-accent);border-radius:12px;padding:14px;font:800 16px/1 inherit;cursor:pointer}
 .mzf-btn[disabled]{opacity:.6;cursor:default}
 .mzf-status{margin-top:12px;font-size:14px;min-height:1em;text-align:center}
 .mzf-status[data-k="err"]{color:#c0392b;font-weight:600}.mzf-status[data-k="ok"]{color:#1f8a4c;font-weight:600}.mzf-status[data-k="pending"]{color:#888}
 .mzf-done{text-align:center;padding:26px 10px}
-.mzf-done .mzf-tick{width:54px;height:54px;border-radius:50%;background:var(--mzf-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 12px}
+.mzf-done .mzf-tick{width:54px;height:54px;border-radius:50%;background:var(--mzf-accent);color:var(--mzf-on-accent);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 12px}
 .mzf-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden}
 .masul-review{margin:0 0 14px;padding:16px 18px;border-radius:12px;background:rgba(0,0,0,.04)}
 .masul-stars{letter-spacing:2px;color:#e0a528}.masul-review-title{font-weight:700;margin:6px 0 4px}
@@ -117,12 +139,17 @@
 `;
     var s = document.createElement("style");
     s.id = "mzf-css";
-    s.textContent = ":root{--mzf-accent:" + ACCENT + "}" + css;
+    s.textContent = ":root{--mzf-accent:" + ACCENT + ";--mzf-on-accent:" + ON_ACCENT + "}" + css;
     document.head.appendChild(s);
   }
 
   /* ---------- form builders ---------- */
-  function field(label, inner) { return '<div class="mzf-field"><label>' + label + "</label>" + inner + "</div>"; }
+  // Every control gets an id its <label for> points at, so screen readers announce "Your name, edit text" not just "edit text".
+  var fieldSeq = 0;
+  function field(label, inner) {
+    var id = "mzf-f" + (++fieldSeq);
+    return '<div class="mzf-field"><label for="' + id + '">' + label + "</label>" + inner.replace(/^<(input|textarea|select)/, '<$1 id="' + id + '"') + "</div>";
+  }
   function contactFields() {
     // Wrapped in a single element so el() (which keeps only the first child) keeps both.
     return '<div class="mzf-contact">' +
@@ -147,7 +174,7 @@
         cats[c].forEach(function (it) {
           html += '<div class="mzf-item" data-i="' + it._i + '"><span class="mzf-nm">' + esc(it.name) + '</span>' +
             (it.price ? '<span class="mzf-pr">' + money(it.price) + "</span>" : "") +
-            '<span class="mzf-step"><button type="button" class="mzf-dec">−</button><span class="mzf-q">0</span><button type="button" class="mzf-inc">+</button></span></div>';
+            '<span class="mzf-step"><button type="button" class="mzf-dec" aria-label="Remove one ' + esc(it.name) + '">−</button><span class="mzf-q" aria-live="polite">0</span><button type="button" class="mzf-inc" aria-label="Add one ' + esc(it.name) + '">+</button></span></div>';
         });
       });
       html += "</div>";
@@ -156,13 +183,15 @@
     } else {
       f.appendChild(el(field("What would you like to order?", '<textarea name="ordertext" rows="3" placeholder="e.g. 2× chicken shawarma, 1× falafel wrap"></textarea>')));
     }
-    f.appendChild(el(
-      '<div class="mzf-field"><label>Collection or delivery</label><div class="mzf-chips" data-ful>' +
-      '<button type="button" data-v="collection" class="mzf-on">Collection</button>' +
-      '<button type="button" data-v="delivery">Delivery</button></div></div>'
-    ));
-    f.appendChild(el('<div class="mzf-addr" hidden>' + field("Delivery address", '<input name="address" autocomplete="street-address">') + "</div>"));
-    f.appendChild(el('<div class="mzf-row">' + field("Collect/deliver at", timeInput()) + field("Today or later", dateInput()) + "</div>"));
+    if (!COLLECTION_ONLY) {
+      f.appendChild(el(
+        '<div class="mzf-field"><label>Collection or delivery</label><div class="mzf-chips" data-ful>' +
+        '<button type="button" data-v="collection" class="mzf-on">Collection</button>' +
+        '<button type="button" data-v="delivery">Delivery</button></div></div>'
+      ));
+      f.appendChild(el('<div class="mzf-addr" hidden>' + field("Delivery address", '<input name="address" autocomplete="street-address">') + "</div>"));
+    }
+    f.appendChild(el('<div class="mzf-row">' + field(COLLECTION_ONLY ? "Collect at" : "Collect/deliver at", timeInput()) + field("Today or later", dateInput()) + "</div>"));
     f.appendChild(el(contactFields()));
     f.appendChild(el(field("Notes (optional)", '<textarea name="notes" rows="2" placeholder="Allergies, spice level…"></textarea>')));
     f.appendChild(el(hp()));
@@ -170,7 +199,7 @@
     f.appendChild(el('<div class="mzf-status" role="status"></div>'));
 
     var ful = "collection";
-    f.querySelector("[data-ful]").addEventListener("click", function (e) {
+    if (!COLLECTION_ONLY) f.querySelector("[data-ful]").addEventListener("click", function (e) {
       var b = e.target.closest("button"); if (!b) return;
       f.querySelectorAll("[data-ful] button").forEach(function (x) { x.classList.remove("mzf-on"); });
       b.classList.add("mzf-on"); ful = b.getAttribute("data-v");
@@ -186,7 +215,20 @@
         row.querySelector(".mzf-inc").addEventListener("click", function () { state.cart[i] = (state.cart[i] || 0) + 1; q.textContent = state.cart[i]; recalc(); });
         row.querySelector(".mzf-dec").addEventListener("click", function () { state.cart[i] = Math.max(0, (state.cart[i] || 0) - 1); q.textContent = state.cart[i]; if (!state.cart[i]) delete state.cart[i]; recalc(); });
       });
+      // A site basket handed over by open("order", {items}) lands in the steppers.
+      if (state.prefill) {
+        state.prefill.forEach(function (p) {
+          for (var i = 0; i < MENU.length; i++) {
+            if (MENU[i].name !== p.name) continue;
+            state.cart[i] = (state.cart[i] || 0) + (Number(p.qty) || 1);
+            f.querySelector('.mzf-item[data-i="' + i + '"] .mzf-q').textContent = state.cart[i];
+            break;
+          }
+        });
+        recalc();
+      }
     }
+    state.prefill = null;
 
     bindSubmit(f, "order", function () {
       var items = [];
@@ -234,18 +276,18 @@
 
   function buildReview() {
     var f = el('<form class="mzf-form" novalidate></form>');
-    f.appendChild(el('<div class="mzf-field"><label>Your rating</label><div class="mzf-stars" data-stars>' +
-      [1, 2, 3, 4, 5].map(function (n) { return '<span data-v="' + n + '">★</span>'; }).join("") + "</div></div>"));
+    f.appendChild(el('<div class="mzf-field"><label id="mzf-rating-lbl">Your rating</label><div class="mzf-stars" data-stars role="group" aria-labelledby="mzf-rating-lbl">' +
+      [1, 2, 3, 4, 5].map(function (n) { return '<button type="button" data-v="' + n + '" aria-pressed="false" aria-label="' + n + (n === 1 ? " star" : " stars") + '">★</button>'; }).join("") + "</div></div>"));
     f.appendChild(el(field("Title (optional)", '<input name="title" maxlength="120" placeholder="Lovely food, warm welcome">')));
     f.appendChild(el(field("Your review", '<textarea name="body" rows="3" required placeholder="Tell others about your visit…"></textarea>')));
     f.appendChild(el(field("Your name", '<input name="name" required autocomplete="name">')));
     f.appendChild(el(hp()));
     f.appendChild(el('<button class="mzf-btn" type="submit">Submit review</button>'));
     f.appendChild(el('<div class="mzf-status" role="status"></div>'));
-    var rating = 0; var stars = f.querySelectorAll("[data-stars] span");
+    var rating = 0; var stars = f.querySelectorAll("[data-stars] button");
     f.querySelector("[data-stars]").addEventListener("click", function (e) {
-      var sp = e.target.closest("span"); if (!sp) return; rating = +sp.getAttribute("data-v");
-      stars.forEach(function (s) { s.classList.toggle("mzf-lit", +s.getAttribute("data-v") <= rating); });
+      var sp = e.target.closest("button"); if (!sp) return; rating = +sp.getAttribute("data-v");
+      stars.forEach(function (s) { var v = +s.getAttribute("data-v"); s.classList.toggle("mzf-lit", v <= rating); s.setAttribute("aria-pressed", String(v === rating)); });
     });
     bindSubmit(f, "review", function () { return { rating: rating, title: val(f, "title"), body: val(f, "body"), name: val(f, "name") }; });
     return f;
@@ -278,8 +320,8 @@
   var overlay, modalBody, tabsEl;
   function ensureModal() {
     if (overlay) return;
-    overlay = el('<div class="mzf-overlay" role="dialog" aria-modal="true"><div class="mzf-modal">' +
-      '<div class="mzf-head"><h3>' + esc(state.name || "Get in touch") + '</h3><button class="mzf-x" aria-label="Close">×</button></div>' +
+    overlay = el('<div class="mzf-overlay" role="dialog" aria-modal="true" aria-labelledby="mzf-title"><div class="mzf-modal">' +
+      '<div class="mzf-head"><h3 id="mzf-title">' + esc(window.MASUL_NAME || state.name || "Get in touch") + '</h3><button class="mzf-x" aria-label="Close">×</button></div>' +
       '<div class="mzf-tabs"></div><div class="mzf-body"></div></div></div>');
     document.body.appendChild(overlay);
     tabsEl = overlay.querySelector(".mzf-tabs");
@@ -300,18 +342,27 @@
   }
   function selectTab(ft) {
     state.tab = ft;
-    tabsEl.querySelectorAll("button").forEach(function (b) { b.classList.toggle("mzf-active", b.getAttribute("data-tab") === ft); });
+    tabsEl.querySelectorAll("button").forEach(function (b) {
+      var on = b.getAttribute("data-tab") === ft;
+      b.classList.toggle("mzf-active", on);
+      if (SEPARATE_FORMS) b.hidden = !on;
+    });
     modalBody.innerHTML = "";
     modalBody.appendChild(BUILDERS[ft]());
   }
-  function open(tab) { ensureModal(); state.open = true; overlay.classList.add("mzf-on"); selectTab(tab || state.features[0]); document.body.style.overflow = "hidden"; }
+  function open(tab, opts) {
+    ensureModal(); state.open = true;
+    state.prefill = opts && Array.isArray(opts.items) ? opts.items : null;
+    overlay.classList.add("mzf-on"); selectTab(tab || state.features[0]); document.body.style.overflow = "hidden";
+  }
   function close() { state.open = false; if (overlay) overlay.classList.remove("mzf-on"); document.body.style.overflow = ""; }
 
   /* ---------- launcher ---------- */
   function renderLauncher() {
     if (document.querySelector(".mzf-launch")) return;
     var wrap = el('<div class="mzf-launch"></div>');
-    var primary = state.features.filter(function (f) { return f !== "review"; })[0] || state.features[0];
+    var primary = state.features.indexOf(LAUNCHER) >= 0 ? LAUNCHER
+      : (state.features.filter(function (f) { return f !== "review"; })[0] || state.features[0]);
     var b = el("<button>" + LABELS[primary] + "</button>");
     b.addEventListener("click", function () { open(primary); });
     wrap.appendChild(b);
