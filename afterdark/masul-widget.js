@@ -370,12 +370,22 @@
   }
 
   /* ---------- wire existing CTAs + review containers ---------- */
+  /* One delegated click listener on document instead of one per CTA. Bundler sites
+     re-serialise the page after we bind: the data-masul-bound marker was copied onto the
+     fresh nodes but their listeners were not, so those buttons silently did nothing
+     (Adept Style's barber tiles, 9 Oct 2026). The document survives the swap, and CTAs
+     added later work without re-wiring. */
+  var ctaDelegated = false;
   function wireExisting() {
-    document.querySelectorAll("[data-masul-open]").forEach(function (node) {
-      if (node.dataset.masulBound) return;
-      node.dataset.masulBound = "1";
-      node.addEventListener("click", function (e) { e.preventDefault(); open(node.getAttribute("data-masul-open")); });
-    });
+    if (!ctaDelegated) {
+      ctaDelegated = true;
+      document.addEventListener("click", function (e) {
+        var node = e.target && e.target.closest ? e.target.closest("[data-masul-open]") : null;
+        if (!node) return;
+        e.preventDefault();
+        open(node.getAttribute("data-masul-open"));
+      }, true);
+    }
     document.querySelectorAll("[data-masul-reviews]").forEach(function (node) {
       if (node.dataset.masulReviewed) return;
       node.dataset.masulReviewed = "1";
